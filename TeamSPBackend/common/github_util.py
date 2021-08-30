@@ -29,7 +29,7 @@ GIT_LOG_PATH = ' --> {}'
 # For Mac
 # UND_PATH = '/Applications/Understand.app/Contents/MacOS/'
 # For Linux Server
-UND_PATH = '~/comp90082sp/understand/scitools/bin/linux64/'
+UND_PATH = BASE_DIR+'/Understand-6.0.1077-Linux-64bit/scitools/bin/linux64/'
 
 # set Understand License
 UND_LICENSE = 'und -setlicensecode XfA7YbMwUZ9OCYJd'
@@ -55,7 +55,8 @@ def construct_certification(repo, space_key):
     password = user_info[0].git_password  # 'Czs0707+'
     if len(username) == 0 or len(password) == 0:
         return -2  # -2 means there doesn't exist git username and pwd
-    return repo[0:8] + username + ':' + password + '@' + repo[8:]
+
+    return repo[0:5] + r':' + repo[6:8] + username + r':' + password + '@' + repo[8:]
 
 
 def init_git():
@@ -153,7 +154,7 @@ def get_pull_request(repo, author=None, branch=None, after=None, before=None):
     pull_repo(repo)
 
     repo_path = REPO_PATH + convert(repo)
-    path = COMMIT_DIR + '/' + convert(repo) + '.log'
+    path = COMMIT_DIR + '/' + convert(repo)+ '.log'
 
     git_log = GIT_LOG_PR_COMMAND.format(repo_path)
     if author:
