@@ -7,6 +7,7 @@ import sys
 import re
 import csv
 import logging
+import ssl
 
 from math import ceil
 from django.views.decorators.http import require_http_methods
@@ -51,7 +52,7 @@ def jira_login(request):
         url='https://jira.cis.unimelb.edu.au:8444',
         username=username,
         password=password,
-        # verify_ssl=False # not required with ssl mitigation
+        verify_ssl=False # not required with ssl mitigation
     )
     return jira
 
@@ -306,9 +307,13 @@ def auto_get_ticket_count_team_timestamped(request):
         teamList = get_all_url_from_db()
         username = atl_username
         password = atl_password
+        print(teamList)
+        print(username)
+        print(password)
         for i in range(len(teamList)):
             team = teamList[i]
             jira_analytics(username, password, team)
+            print("sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss")
             data = []
             with open('TeamSPBackend/api/views/jira/cfd_modified.csv', newline='') as csv_file:
                 reader = csv.DictReader(csv_file)
@@ -517,6 +522,8 @@ def setGithubJiraUrl(request):
 @require_http_methods(['GET'])
 def get_ticket_count_from_db(request, team):
     try:
+
+        print("This is request:::::::",request)
         coordinator_id = request.session.get('coordinator_id')
         existRecord = list(
             ProjectCoordinatorRelation.objects.filter(coordinator_id=coordinator_id, space_key=team).values(
