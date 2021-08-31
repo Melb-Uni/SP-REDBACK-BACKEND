@@ -13,7 +13,7 @@ sm2-demo is a demo for running in local environments. It is updated by Yixiao Zh
 
 sm2-jira is the branch of new features on Jira part. It is updated by Yixiao Zhang and Yingpeng Tan.
 
-sm2-git is the branch of new features on Git part. It is updated by Shisheng Liu and Qiuyuan Haung.
+sm2-git is the branch of new features on Git part. It is updated by Shisheng Liu and Qiuyuan Huang.
 
 sm2-confluence is the branch of new features on Confluence part. It is updated by Yang-Han Chen and Yalan Zhao.
 
