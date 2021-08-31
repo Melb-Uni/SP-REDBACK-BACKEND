@@ -8,9 +8,13 @@ It provides REST apis for students activities data on Confluence, Jira, and Git.
 In Semester 2, 2021, in order to make it easier to distinguish from the previous work, there is an instruction of branch and release management.
 
 Branch management is composed of the following parts:
+
 sm2-demo is a demo for running in local environments. It is updated by Yixiao Zhang.
+
 sm2-jira is the branch of new features on Jira part. It is updated by Yixiao Zhang and Yingpeng Tan.
+
 sm2-git is the branch of new features on Git part. It is updated by Shisheng Liu and Qiuyuan Haung.
+
 sm2-conflence is the branch of new features on Confluence part. It is updated by Yang-Han Chen and Yalan Zhao.
 
 ## Deploy methods
