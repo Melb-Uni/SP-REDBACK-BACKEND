@@ -15,7 +15,7 @@ sm2-jira is the branch of new features on Jira part. It is updated by Yixiao Zha
 
 sm2-git is the branch of new features on Git part. It is updated by Shisheng Liu and Qiuyuan Haung.
 
-sm2-conflence is the branch of new features on Confluence part. It is updated by Yang-Han Chen and Yalan Zhao.
+sm2-confluence is the branch of new features on Confluence part. It is updated by Yang-Han Chen and Yalan Zhao.
 
 ## Deploy methods
 
