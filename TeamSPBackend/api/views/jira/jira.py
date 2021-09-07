@@ -313,7 +313,6 @@ def auto_get_ticket_count_team_timestamped(request):
         for i in range(len(teamList)):
             team = teamList[i]
             jira_analytics(username, password, team)
-            print("sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss")
             data = []
             with open('TeamSPBackend/api/views/jira/cfd_modified.csv', newline='') as csv_file:
                 reader = csv.DictReader(csv_file)
@@ -388,23 +387,32 @@ def get_contributions(request, team):
         students, names = get_done_contributor_names(get_project_key(team, jira), jira)
         team = get_project_key(team, jira)
         count = []
+        change_log = []
         for student in students:
+            change_log_temp = []
             count.append(jira.jql('assignee = ' + student + ' AND project = "'
                                   + team + '" AND status = "Done"')['total'])
-        result = dict(zip(names, count))
-
+            temp = jira.jql('assignee = ' + student + ' AND project = "'
+                                  + team + '" AND status CHANGED by ' + student)['issues']
+            for element in temp:
+                change_log_temp.append(element['fields']['summary'])
+            change_log.append(change_log_temp)
+        value = zip(count, change_log)
+        result = dict(zip(names, value))
         data = []
-        for name, count in result.items():
+        for name, value in result.items():
+            count, change_log = value
             data.append({
                 'student': name,
-                'done_count': count
+                'done_count': count,
+                'change_log': change_log
             })
             if IndividualContributions.objects.filter(space_key=team, student=name).exists():
                 IndividualContributions.objects.filter(space_key=team, student=name).update(done_count=count)
+                IndividualContributions.objects.filter(space_key=team, student=name).update(change_log=change_log)
             else:
-                jira_obj = IndividualContributions(space_key=team, student=name, done_count=count)
+                jira_obj = IndividualContributions(space_key=team, student=name, done_count=count, change_log=change_log)
                 jira_obj.save()
-
         resp = init_http_response(
             RespCode.success.value.key, RespCode.success.value.msg)
         resp['data'] = data

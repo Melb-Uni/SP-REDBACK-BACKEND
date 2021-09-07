@@ -19,6 +19,7 @@ class IndividualContributions(models.Model):
     space_key = models.CharField(max_length=256, null=False)
     student = models.CharField(max_length=256, null=False)
     done_count = models.IntegerField(null=False)
+    change_log = models.CharField(max_length=10000, default="")
 
 
     class Meta:
