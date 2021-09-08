@@ -2,6 +2,8 @@ Connection:
     Domain: jirainstance 
     Username: usernameplace
     Password: passwordplace
+    jira client options:
+        verify: false
 
 Query: Project= projectplace
 
