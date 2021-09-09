@@ -27,12 +27,12 @@ GIT_LOG_PATH = ' --> {}'
 
 # using Understand for analyze Metrics
 # For Mac
-# UND_PATH = '/Applications/Understand.app/Contents/MacOS/'
+UND_PATH = '/Applications/Understand.app/Contents/MacOS/'
 # For Linux Server
-UND_PATH = BASE_DIR+'/Understand-6.0.1077-Linux-64bit/scitools/bin/linux64/'
+#UND_PATH = BASE_DIR+'/Understand-6.0.1077-Linux-64bit/scitools/bin/linux64/'
 
 # set Understand License
-UND_LICENSE = 'und -setlicensecode XfA7YbMwUZ9OCYJd'
+UND_LICENSE = 'und -setlicensecode RgNuX72O0IInmAKc6BuC'
 os.system(UND_LICENSE)
 
 # understand und command line for loading a git repo and generate metrics
