@@ -14,6 +14,34 @@ class JiraCountByTime(models.Model):
     class Meta:
         db_table = 'jira_count_by_time'
 
+class JiraCycleTimeScatter(models.Model):
+    id = models.AutoField(primary_key=True)
+    space_key = models.CharField(max_length=256, null=False)
+    completed = models.CharField(max_length=256,null=False)
+    cycle_time = models.IntegerField( null=False)
+    summary = models.CharField(max_length=256, null=False)
+
+    class Meta:
+        db_table = 'jira_cycle_time_data'
+
+class JiraThroughPut(models.Model):
+    id = models.AutoField(primary_key=True)
+    space_key = models.CharField(max_length=256, null=False)
+    time = models.CharField(max_length=256,null=False)
+    count = models.IntegerField( null=False)
+
+    class Meta:
+        db_table = 'jira_throughput'
+
+class JiraHistogram(models.Model):
+    id = models.AutoField(primary_key=True)
+    space_key = models.CharField(max_length=256, null=False)
+    day = models.CharField(max_length=256,null=False)
+    count = models.IntegerField(null=False)
+
+    class Meta:
+        db_table = 'jira_histogram'
+
 class IndividualContributions(models.Model):
     id = models.AutoField(primary_key=True)
     space_key = models.CharField(max_length=256, null=False)
