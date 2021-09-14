@@ -42,9 +42,9 @@ DATABASES = {
     # }
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'sp900135',
+        'NAME': 'sp90013',
         'USER': 'root',
-        'PASSWORD': 'a1997215!',
+        'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': 3306,
         'CHARSET': 'utf8mb4',
