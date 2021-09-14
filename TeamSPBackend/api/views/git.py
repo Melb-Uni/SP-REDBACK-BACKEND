@@ -18,17 +18,20 @@ def get_git_individual_commits(request, space_key):
         for item in StudentCommitCounts.objects.filter(space_key=space_key):
             temp = {
                 "student": str(item.student_name),
-                "commit_count": int(item.commit_counts)
+                "commit_count": int(item.commit_counts),
+                 "version": str(item.version)
             }
             data.append(temp)
     else:
+        # if we know its github url
         if ProjectCoordinatorRelation.objects.filter(space_key=space_key).exists():
             update_individual_commits()
             temp = {}
             for item in StudentCommitCounts.objects.filter(space_key=space_key):
                 temp = {
                     "student": str(item.student_name),
-                    "commit_count": int(item.commit_counts)
+                    "commit_count": int(item.commit_counts),
+                    "version": str(item.version)
                 }
                 data.append(temp)
         else:

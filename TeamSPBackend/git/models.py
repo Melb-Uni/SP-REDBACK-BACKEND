@@ -10,7 +10,7 @@ class StudentCommitCounts(models.Model):
     relation_id = models.CharField(max_length=256, null=True)
     commit_counts = models.CharField(max_length=256, null=False)
     space_key = models.CharField(max_length=256, null=True)
-
+    version = models.CharField(max_length=256, null=False, default="")
     class Meta:
         db_table = 'student_commit_counts'
 

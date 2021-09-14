@@ -113,12 +113,17 @@ def get_commits(repo, space_key, author=None, branch=None, after=None, before=No
     path = COMMIT_DIR + '/' + convert(repo) + '.log'
 
     git_log = GIT_LOG_COMMAND.format(repo_path)
+
     if author:
         git_log += GIT_LOG_AUTHOR.format(author)
     if after:
         git_log += GIT_LOG_AFTER.format(after)
     if before:
         git_log += GIT_LOG_BEFORE.format(before)
+
+    # if version:
+    #     git_log += GIT_LOG_DATE.format(version)
+
     git_log += GIT_LOG_PATH.format(path)
 
     if not branch:
@@ -126,7 +131,12 @@ def get_commits(repo, space_key, author=None, branch=None, after=None, before=No
 
     os.system(GIT_CHECKOUT_COMMAND.format(repo_path, branch))
 
-    logger.info('[GIT] Path: {} Executing: {}'.format(path, git_log))
+    print("在这里！！！！！！")
+    print(GIT_CHECKOUT_COMMAND.format(repo_path, branch))
+    print("在这里！！！！！！")
+    print(git_log)
+
+    logger.info('get_commits[GIT] Path: {} Executing: {}'.format(path, git_log))
     os.system(git_log)
 
     with open(path, 'r', encoding='utf-8') as f:
@@ -140,12 +150,20 @@ def get_commits(repo, space_key, author=None, branch=None, after=None, before=No
         # hash_code = lines[i].strip()
         author = lines[i + 1].strip()
         date = int(lines[i + 2].strip())
+        description = lines[i + 3].strip()
 
         commit = dict(
-            # hash=hash_code,
+
             author=author,
             date=date,
+            description=description,
         )
+
+        # commit = dict(
+        #     # hash=hash_code,
+        #     author=author,
+        #     date=date,
+        # )
         commits.append(commit)
     return commits
 
