@@ -3,7 +3,7 @@ import logging
 import atlassian
 import urllib3
 from ..api.views.confluence.confluence import log_into_confluence
-from TeamSPBackend.confluence.models import PageHistory, UserList, IndividualConfluenceContribution, MeetingMinutes
+from TeamSPBackend.confluence.models import PageHistory, UserList, IndividualConfluenceContribution, IndividualContributionPages, MeetingMinutes
 from datetime import datetime
 import time
 from TeamSPBackend.common import utils
@@ -61,11 +61,22 @@ def update_space_user_list(space_key):
                     continue
                 user_list.append(get_user(user_info, space_key))
                 user_set.add(contribution.user_id)
+        for contribution in IndividualContributionPages.objects.filter(space_key=space_key):
+            if contribution.user_id not in user_set:
+                try:
+                    user_info = conf.get_user_details_by_username(contribution.user_id)
+                except atlassian.errors.ApiNotFoundError as e:
+                    logger = logging.getLogger('django')
+                    logger.error(str(e) + " " + contribution.user_id)
+                    continue
+                user_list.append(get_user(user_info, space_key))
+                user_set.add(contribution.user_id)
     return user_list
 
 
 def insert_space_user_list(space_key):
     insert_space_page_contribution(space_key)
+    insert_space_page_contribution_1(space_key)
     user_list = update_space_user_list(space_key)
     with transaction.atomic():
         UserList.objects.filter(space_key=space_key).delete()
@@ -273,6 +284,113 @@ def update_space_page_contribution(space_key):
 
     return page_contribution
 
+def update_space_page_contribution_1(space_key):
+    """
+    update the individual contributions of confluence pages in a specific space
+    """
+    atl_username = config.atl_username
+    atl_password = config.atl_password
+    conf = confluence.log_into_confluence(atl_username, atl_password)
+    limit = 100
+    contents = conf.get_space_content(space_key=space_key, content_type="page", limit=limit,
+                                      expand="history.contributors.publishers.users")
+    results = contents["results"]
+    # while there exists incoming results, keep getting space contents
+    while contents["size"] == contents["limit"]:
+        contents = conf.get_space_content(space_key=space_key, start=len(results), limit=limit,
+                                          content_type="page", expand="history.contributors.publishers.users")
+        results.extend(contents["results"])
+
+    #member_contributions = {}
+    #id_name = {}
+    # Loop through every page and store in a dictionary {"page": set of members}
+    #for page in results:
+    #    page_contributors = page["history"]["contributors"]["publishers"]["users"]
+    #    for user in page_contributors:
+    #        if user['username'] == 'admin':
+    #            continue
+    #        if not user["displayName"] in member_contributions:
+    #            member_contributions[user["displayName"]] = 0
+    #            id_name[user["displayName"]] = user["username"]
+    #        member_contributions[user["displayName"]] += 1
+    #"""
+    contributors = {}
+    id_name = {}
+    for page in results:
+        page_contributors = page["history"]["contributors"]["publishers"]["users"]
+    for user in page_contributors:
+            if user['username'] == 'admin':
+                continue
+            if not user['username'] in contributors:
+                contributors[user["displayName"]]=[]
+                id_name[user["displayName"]] = user["username"]
+            contributors[user["displayName"]].append(page['title'])
+    page_contribution = []
+    for user_name in contributors:
+        for page in contributors[user_name]:
+            page_contribution.append(IndividualContributionPages(
+                space_key=space_key,
+                user_id=id_name[user_name],
+                user_name=user_name,
+                page_name = page
+            ))
+
+    return page_contribution
+
+def get_last_updated_files(space_key):
+    """
+    get the list of lastly updated files
+    author:yalzhao
+    """
+    atl_username = config.atl_username
+    atl_password = config.atl_password
+    conf = confluence.log_into_confluence(atl_username, atl_password)
+    limit = 100
+    contents = conf.get_space_content(space_key=space_key, content_type="page", limit=limit,
+                                      expand="history.contributors.publishers.users")
+    results = contents["results"]
+    # while there exists incoming results, keep getting space contents
+    while contents["size"] == contents["limit"]:
+        contents = conf.get_space_content(space_key=space_key, start=len(results), limit=limit,
+                                          content_type="page", expand="history.contributors.publishers.users")
+        results.extend(contents["results"])
+
+    contributed_files=[]
+    
+    # Loop through every page and store the pages i and upated times.
+    for page in results:
+        contributed_files.append((page["history"]["lastUpdated"]["when"],[page["id"]]))
+    contributed_files.sort(reverse = True)
+
+    return contributed_files[:10]
+
+def get_comment(space_key):
+    """
+    get the comments on the page 
+    author: yalzhao
+    """
+    atl_username = config.atl_username
+    atl_password = config.atl_password
+    conf = confluence.log_into_confluence(atl_username, atl_password)
+    limit = 100
+    contents = conf.get_space_content(space_key=space_key, content_type="page", limit=limit,
+                                      expand="history.contributors.publishers.users")
+    results = contents["results"]
+    # while there exists incoming results, keep getting space contents
+    while contents["size"] == contents["limit"]:
+        contents = conf.get_space_content(space_key=space_key, start=len(results), limit=limit,
+                                          content_type="page", expand="history.contributors.publishers.users")
+        results.extend(contents["results"])
+
+    while contents["size"] == contents["limit"]:
+        contents = conf.get_space_content(space_key=space_key, start=len(results), limit=limit,
+                                          content_type="page", expand="history.contributors.publishers.users")
+        results.extend(contents["results"])
+    comments = []
+    for page in results:
+        comments.append(([page["id"]],len(page["descendants"]["comment"]["result"])))
+    return comments
+
 
 def insert_space_page_contribution(space_key):
     page_contribution = update_space_page_contribution(space_key)
@@ -290,6 +408,21 @@ def update_page_contribution():
         IndividualConfluenceContribution.objects.all().delete()
         IndividualConfluenceContribution.objects.bulk_create(page_contribution)
 
+def insert_space_page_contribution_1(space_key):
+    page_contribution = update_space_page_contribution_1(space_key)
+    with transaction.atomic():
+        IndividualContributionPages.objects.filter(space_key=space_key).delete()
+        IndividualContributionPages.objects.bulk_create(page_contribution)
+
+
+def update_page_contribution_1():
+    page_contribution = []
+    for space_key in get_spaces():
+        page_contribution.extend(update_space_page_contribution_1(space_key))
+
+    with transaction.atomic():
+        IndividualContributionPages.objects.all().delete()
+        IndividualContributionPages.objects.bulk_create(page_contribution)
 
 def get_spaces():
     spaces = set()

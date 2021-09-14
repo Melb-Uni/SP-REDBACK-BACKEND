@@ -41,3 +41,12 @@ class IndividualConfluenceContribution(models.Model):
 
     class Meta:
         db_table = 'individual_confluence_contribution'
+
+class IndividualContributionPages(models.Model):
+    space_key = models.CharField(max_length=256)
+    page_name = models.CharField(max_length=256)
+    user_id = models.CharField(max_length=256)
+    user_name = models.CharField(max_length=256)
+
+    class Meta:
+        db_table = 'individual_confluence_pages'
