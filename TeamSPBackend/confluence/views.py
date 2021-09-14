@@ -301,30 +301,17 @@ def update_space_page_contribution_1(space_key):
                                           content_type="page", expand="history.contributors.publishers.users")
         results.extend(contents["results"])
 
-    #member_contributions = {}
-    #id_name = {}
-    # Loop through every page and store in a dictionary {"page": set of members}
-    #for page in results:
-    #    page_contributors = page["history"]["contributors"]["publishers"]["users"]
-    #    for user in page_contributors:
-    #        if user['username'] == 'admin':
-    #            continue
-    #        if not user["displayName"] in member_contributions:
-    #            member_contributions[user["displayName"]] = 0
-    #            id_name[user["displayName"]] = user["username"]
-    #        member_contributions[user["displayName"]] += 1
-    #"""
     contributors = {}
     id_name = {}
     for page in results:
         page_contributors = page["history"]["contributors"]["publishers"]["users"]
-    for user in page_contributors:
+        for user in page_contributors:
             if user['username'] == 'admin':
                 continue
             if not user['username'] in contributors:
-                contributors[user["displayName"]]=[]
-                id_name[user["displayName"]] = user["username"]
-            contributors[user["displayName"]].append(page['title'])
+                contributors[user["username"]]=[]
+                id_name[user["username"]] = user["username"]
+            contributors[user["username"]].append(page['title'])
     page_contribution = []
     for user_name in contributors:
         for page in contributors[user_name]:

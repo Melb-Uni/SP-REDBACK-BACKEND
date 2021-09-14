@@ -46,7 +46,7 @@ def get_all_contributor_pages(request, space_key):
         data = []
         for contribution in IndividualContributionPages.objects.filter(space_key=space_key):
             pair = {
-                "student": contribution.user_name,
+                "student": contribution.user_id,
                 "page_name": contribution.page_name
             }
             data.append(pair)
