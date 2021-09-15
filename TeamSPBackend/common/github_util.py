@@ -131,11 +131,6 @@ def get_commits(repo, space_key, author=None, branch=None, after=None, before=No
 
     os.system(GIT_CHECKOUT_COMMAND.format(repo_path, branch))
 
-    print("在这里！！！！！！")
-    print(GIT_CHECKOUT_COMMAND.format(repo_path, branch))
-    print("在这里！！！！！！")
-    print(git_log)
-
     logger.info('get_commits[GIT] Path: {} Executing: {}'.format(path, git_log))
     os.system(git_log)
 

@@ -9,7 +9,7 @@ from TeamSPBackend.common.utils import make_json_response, body_extract, init_ht
 from TeamSPBackend.git.models import StudentCommitCounts, GitCommitCounts, GitMetrics
 from TeamSPBackend.project.models import ProjectCoordinatorRelation
 from TeamSPBackend.git.views import construct_url
-
+import collections
 
 @require_http_methods(['GET'])
 def get_git_individual_commits(request, space_key):
@@ -46,7 +46,8 @@ def get_git_individual_commits(request, space_key):
 def get_git_commits(request, space_key):
     # Case 1: if git_commit table contains this space_key, get it directly from db
     data = []
-    if GitCommitCounts.objects.filter(space_key=space_key).exists():
+    if GitCommitCounts.objects.filter(space_key=space_key).exists() and not GitCommitCounts.objects.filter(space_key=space_key,version ="").exists():
+
         query_set = GitCommitCounts.objects.filter(space_key=space_key)
         start = 0
         if len(query_set) >= 30:
@@ -54,12 +55,14 @@ def get_git_commits(request, space_key):
         for i in query_set[start:]:
             tmp = {
                 "time": int(i.query_date),
-                "commit_count": int(i.commit_counts)
+                "commit_count": int(i.commit_counts),
+                "version": str(i.version)
             }
             data.append(tmp)
     else:
         # Case 2: if git_commit table doesn't contain while relation table contains,
         # get it from git web (the first crawler)
+
         coordinator_id = request.session['coordinator_id']
         if ProjectCoordinatorRelation.objects.filter(space_key=space_key, coordinator_id=coordinator_id).exists():
             relation_data = ProjectCoordinatorRelation.objects.filter(space_key=space_key, coordinator_id=coordinator_id)[0]
@@ -84,12 +87,15 @@ def get_git_commits(request, space_key):
             for i in range(30):
                 days.append(today - i * 24 * 60 * 60)
 
+            delta_version =  collections.defaultdict(lambda: "Not Present")  # To store every day lastest description
             for commit in commits:
                 ts = commit['date']
                 for i in days:
                     if ts > i:
                         break
                     else:
+                        if delta_version[i] =="Not Present":
+                            delta_version[i] = commit['description']
                         if i in delta_commit_count:
                             delta_commit_count[i] += 1
                         else:
@@ -98,19 +104,23 @@ def get_git_commits(request, space_key):
             days = [i for i in reversed(days)]  # sort days
             for day in days:
                 count = 0
+                version = ''
                 if day in delta_commit_count:
                     count = delta_commit_count[day]
+                    version = delta_version[day]
                 # data which are returned to front end
                 tmp = {
                     "time": int(day),
-                    "commit_count": int(count)
+                    "commit_count": int(count),
+                    "version": str(version)
                 }
                 data.append(tmp)
                 # store data into db by date
                 git_data = GitCommitCounts(
                     space_key=space_key,
                     commit_counts=count,
-                    query_date=day
+                    query_date=day,
+                    version = version
                 )
                 git_data.save()
             # for i in commits:

@@ -15,7 +15,6 @@ from TeamSPBackend.common.utils import transformTimestamp
 
 
 def update_individual_commits():
-    print("readddddddddddd\n")
     for relation in ProjectCoordinatorRelation.objects.all():
         data = {
             "url": relation.git_url
@@ -54,9 +53,9 @@ def update_individual_commits():
 
 
         for key, value in CommitCount.items():
-            print("lastest_description")
+            # print("lastest_description")
             lastest_description = CommitDescription[key]
-            print(lastest_description)
+            # print(lastest_description)
 
             if StudentCommitCounts.objects.filter(student_name=str(key)).exists():
                 user = StudentCommitCounts.objects.get(student_name=str(key))

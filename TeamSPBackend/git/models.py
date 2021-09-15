@@ -20,7 +20,7 @@ class GitCommitCounts(models.Model):
     space_key = models.CharField(max_length=256, null=False)
     commit_counts = models.CharField(max_length=256, null=False)
     query_date = models.IntegerField(null=False)
-
+    version = models.CharField(max_length=256, null=False, default="")
     class Meta:
         db_table = 'git_commit_counts'
 
