@@ -480,9 +480,8 @@ def auto_get_contributions(request):
 @require_http_methods(['GET'])
 def get_contributions_from_db(request, team):
     try:
-        coordinator_id = request.session.get('coordinator_id')
         existRecord = list(
-            ProjectCoordinatorRelation.objects.filter(coordinator_id=coordinator_id, space_key=team).values(
+            ProjectCoordinatorRelation.objects.filter(space_key=team).values(
                 'jira_project'))
         url = key_extracter(existRecord[0])
         jira_url = url.get('jira_project')
@@ -775,9 +774,8 @@ def update_histogramdata(jira_url):
 def get_scatterdata_from_db(request, team):
     try:
 
-        coordinator_id = request.session.get('coordinator_id')
         existRecord = list(
-            ProjectCoordinatorRelation.objects.filter(coordinator_id=coordinator_id, space_key=team).values(
+            ProjectCoordinatorRelation.objects.filter(space_key=team).values(
                 'jira_project'))
         url = key_extracter(existRecord[0])
         jira_url = url.get('jira_project')
@@ -796,9 +794,8 @@ def get_scatterdata_from_db(request, team):
 def get_throughputdata_from_db(request, team):
     try:
 
-        coordinator_id = request.session.get('coordinator_id')
         existRecord = list(
-            ProjectCoordinatorRelation.objects.filter(coordinator_id=coordinator_id, space_key=team).values(
+            ProjectCoordinatorRelation.objects.filter(space_key=team).values(
                 'jira_project'))
         url = key_extracter(existRecord[0])
         jira_url = url.get('jira_project')
@@ -817,9 +814,8 @@ def get_throughputdata_from_db(request, team):
 def get_histogramdata_from_db(request, team):
     try:
 
-        coordinator_id = request.session.get('coordinator_id')
         existRecord = list(
-            ProjectCoordinatorRelation.objects.filter(coordinator_id=coordinator_id, space_key=team).values(
+            ProjectCoordinatorRelation.objects.filter(space_key=team).values(
                 'jira_project'))
         url = key_extracter(existRecord[0])
         jira_url = url.get('jira_project')
