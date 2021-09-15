@@ -3,7 +3,7 @@ import logging
 import atlassian
 import urllib3
 from ..api.views.confluence.confluence import log_into_confluence
-from TeamSPBackend.confluence.models import PageHistory, UserList, IndividualConfluenceContribution, IndividualContributionPages, MeetingMinutes
+from TeamSPBackend.confluence.models import PageHistory, UserList, IndividualConfluenceContribution, RecentPages, IndividualContributionPages, MeetingMinutes
 from datetime import datetime
 import time
 from TeamSPBackend.common import utils
@@ -77,6 +77,7 @@ def update_space_user_list(space_key):
 def insert_space_user_list(space_key):
     insert_space_page_contribution(space_key)
     insert_space_page_contribution_1(space_key)
+    insert_recent_pages(space_key)
     user_list = update_space_user_list(space_key)
     with transaction.atomic():
         UserList.objects.filter(space_key=space_key).delete()
@@ -287,6 +288,7 @@ def update_space_page_contribution(space_key):
 def update_space_page_contribution_1(space_key):
     """
     update the individual contributions of confluence pages in a specific space
+    author:yalzhao
     """
     atl_username = config.atl_username
     atl_password = config.atl_password
@@ -341,15 +343,25 @@ def get_last_updated_files(space_key):
         contents = conf.get_space_content(space_key=space_key, start=len(results), limit=limit,
                                           content_type="page", expand="history.contributors.publishers.users")
         results.extend(contents["results"])
-
+    
     contributed_files=[]
     
     # Loop through every page and store the pages i and upated times.
     for page in results:
-        contributed_files.append((page["history"]["lastUpdated"]["when"],[page["id"]]))
+        if "lastUpdated" in page["history"]:
+            contributed_files.append((page["history"]["lastUpdated"]["when"],page["title"],page['_links']["webui"]))
+        else:
+            contributed_files.append((page["history"]["createdDate"],page["title"],page['_links']["webui"]))
     contributed_files.sort(reverse = True)
-
-    return contributed_files[:10]
+    ans=[]
+    for (time,title,link) in contributed_files[:20]:
+        ans.append(RecentPages(
+            space_key = space_key,
+            page_name = title,
+            updated_time = time,
+            link = "https://confluence.cis.unimelb.edu.au:8443/" + str(link)
+        ))
+    return ans
 
 def get_comment(space_key):
     """
@@ -410,6 +422,23 @@ def update_page_contribution_1():
     with transaction.atomic():
         IndividualContributionPages.objects.all().delete()
         IndividualContributionPages.objects.bulk_create(page_contribution)
+
+def insert_recent_pages(space_key):
+    page_contribution = get_last_updated_files(space_key)
+    with transaction.atomic():
+        RecentPages.objects.filter(space_key=space_key).delete()
+        RecentPages.objects.bulk_create(page_contribution)
+
+
+def update_recent_page():
+    page_contribution = []
+    for space_key in get_spaces():
+        page_contribution.extend(get_last_updated_files(space_key))
+
+    with transaction.atomic():
+        RecentPages.objects.all().delete()
+        RecentPages.objects.bulk_create(page_contribution)
+
 
 def get_spaces():
     spaces = set()

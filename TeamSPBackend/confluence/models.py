@@ -50,3 +50,12 @@ class IndividualContributionPages(models.Model):
 
     class Meta:
         db_table = 'individual_confluence_pages'
+
+class RecentPages(models.Model):
+    space_key = models.CharField(max_length=256)
+    page_name = models.CharField(max_length=256)
+    updated_time = models.CharField(max_length=256)
+    link = models.CharField(max_length=2560)
+
+    class Meta:
+        db_table = 'recent_pages'

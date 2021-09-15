@@ -62,6 +62,8 @@ urlpatterns = [
          page_contributions.get_all_page_contributions),
     path('confluence/spaces/<space_key>/pages/contributions_new',
          page_contributions.get_all_contributor_pages),
+    path('confluence/spaces/<space_key>/pages/updated_files',
+         page_contributions.get_recent_pages),
     path('confluence/spaces/<space_key>/pages/<int:page_id>',
          confluence.get_page_contributors),
     path('confluence/groups', confluence.get_all_groups),
