@@ -59,3 +59,13 @@ class RecentPages(models.Model):
 
     class Meta:
         db_table = 'recent_pages'
+
+class RecentComments(models.Model):
+    space_key = models.CharField(max_length=256)
+    page_name = models.CharField(max_length=256)
+    updated_time = models.CharField(max_length=256)
+    creator = models.CharField(max_length=256)
+    content = models.CharField(max_length=2560)
+
+    class Meta:
+        db_table = 'confluence_comment'

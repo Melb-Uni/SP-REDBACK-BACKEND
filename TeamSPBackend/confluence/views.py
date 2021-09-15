@@ -3,7 +3,7 @@ import logging
 import atlassian
 import urllib3
 from ..api.views.confluence.confluence import log_into_confluence
-from TeamSPBackend.confluence.models import PageHistory, UserList, IndividualConfluenceContribution, RecentPages, IndividualContributionPages, MeetingMinutes
+from TeamSPBackend.confluence.models import PageHistory, UserList, IndividualConfluenceContribution, RecentPages,RecentComments,  IndividualContributionPages, MeetingMinutes
 from datetime import datetime
 import time
 from TeamSPBackend.common import utils
@@ -78,6 +78,7 @@ def insert_space_user_list(space_key):
     insert_space_page_contribution(space_key)
     insert_space_page_contribution_1(space_key)
     insert_recent_pages(space_key)
+    insert_comments(space_key)
     user_list = update_space_user_list(space_key)
     with transaction.atomic():
         UserList.objects.filter(space_key=space_key).delete()
@@ -368,27 +369,46 @@ def get_comment(space_key):
     get the comments on the page 
     author: yalzhao
     """
+    import re
     atl_username = config.atl_username
     atl_password = config.atl_password
     conf = confluence.log_into_confluence(atl_username, atl_password)
-    limit = 100
+    limit = 10000
     contents = conf.get_space_content(space_key=space_key, content_type="page", limit=limit,
                                       expand="history.contributors.publishers.users")
     results = contents["results"]
-    # while there exists incoming results, keep getting space contents
-    while contents["size"] == contents["limit"]:
-        contents = conf.get_space_content(space_key=space_key, start=len(results), limit=limit,
-                                          content_type="page", expand="history.contributors.publishers.users")
-        results.extend(contents["results"])
 
-    while contents["size"] == contents["limit"]:
-        contents = conf.get_space_content(space_key=space_key, start=len(results), limit=limit,
-                                          content_type="page", expand="history.contributors.publishers.users")
-        results.extend(contents["results"])
     comments = []
     for page in results:
-        comments.append(([page["id"]],len(page["descendants"]["comment"]["result"])))
-    return comments
+        page_info = conf.get_page_by_id(page_id = page["id"],expand = "children.comment")
+        #print(page_info)
+        #page_info = conf.get_page_child_by_type(page_id = page["id"],type = "page")
+        new_id = page_info["children"]["comment"]["results"]
+        for i in range(len(new_id)):
+            new_info = conf.get_page_by_id(page_id = new_id[i]["id"],expand = "body.view")
+            new_info2 = conf.get_page_by_id(page_id = new_id[i]["id"],expand = "history")
+            #print(new_info)
+            st = new_info["body"]["view"]["value"]
+            reg = re.compile('<[^>]*>')
+            content = reg.sub('',st).replace('\n','')
+            comments.append((page["title"],content,new_info2["history"]["createdDate"],new_info2["history"]["createdBy"]["username"]))
+            #print(conf.get_page_child_by_type(page_id = new_id[i]["id"],type="comment",start=None, limit=None)) #type="comment"
+        #for child in page_info:
+            #comments.append((space_key,child))
+            #print(page_info)
+            #if child["childTypes"]["comment"]["value"]:
+                #comments.append(([child["title"]],child["children"]["comment"]["results"]))
+    ans=[]
+    #print(comments)
+    for (title,content,time,creator) in comments:
+        ans.append(RecentComments(
+            space_key = space_key,
+            page_name = title,
+            updated_time = time,
+            content=content,
+            creator =creator
+        ))
+    return ans
 
 
 def insert_space_page_contribution(space_key):
@@ -439,6 +459,21 @@ def update_recent_page():
         RecentPages.objects.all().delete()
         RecentPages.objects.bulk_create(page_contribution)
 
+def insert_comments(space_key):
+    page_contribution = get_comment(space_key)
+    with transaction.atomic():
+        RecentComments.objects.filter(space_key=space_key).delete()
+        RecentComments.objects.bulk_create(page_contribution)
+
+
+def update_comments():
+    page_contribution = []
+    for space_key in get_spaces():
+        page_contribution.extend(get_comment(space_key))
+
+    with transaction.atomic():
+        RecentComments.objects.all().delete()
+        RecentComments.objects.bulk_create(page_contribution)
 
 def get_spaces():
     spaces = set()
