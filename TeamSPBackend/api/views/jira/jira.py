@@ -487,7 +487,8 @@ def get_contributions_from_db(request, team):
         url = key_extracter(existRecord[0])
         jira_url = url.get('jira_project')
 
-        allExistRecord = list(IndividualContributions.objects.filter(space_key=jira_url).values('student', 'done_count', 'change_log'))
+        allExistRecord = list(IndividualContributions.objects.filter(space_key=jira_url).values('student', 'done_count',
+                                                                                                'change_log'))
 
         resp = init_http_response(
             RespCode.success.value.key, RespCode.success.value.msg)
@@ -606,7 +607,7 @@ def jira_analytics(username, password, team):
 
 # new analysis function for sm2
 def jira_analytics2(username, password, team):
-    """Only queries cfd with jira-agile-metrics"""
+    """Only queries Scatterplot, Histogram, Throughput  with jira-agile-metrics"""
     copyfile('TeamSPBackend/api/views/jira/cfd-template.yaml', 'TeamSPBackend/api/views/jira/cfd.yaml')
     with open('TeamSPBackend/api/views/jira/cfd.yaml', 'r') as file:
         data = file.read()
@@ -629,9 +630,9 @@ def auto_get_three_metricsdata(request):
         for i in range(len(teamList)):
             team = teamList[i]
             jira_analytics2(username, password, team)
-            auto_get_scatterdata(request, team)
-            auto_get_throughputdata(request, team)
-            auto_get_histogramdata(request,team)
+            auto_get_scatterdata(team)
+            auto_get_throughputdata(team)
+            auto_get_histogramdata(team)
 
         data=[]
         return HttpResponse(data, content_type="application/json")
@@ -639,7 +640,7 @@ def auto_get_three_metricsdata(request):
         resp = {'code': -1, 'msg': 'error'}
         return HttpResponse(json.dumps(resp), content_type="application/json")
 
-def auto_get_scatterdata(request, team):
+def auto_get_scatterdata(team):
     data = []
     with open('TeamSPBackend/api/views/jira/scatterplot.csv', newline='') as csv_file:
         reader = csv.DictReader(csv_file)
@@ -657,9 +658,9 @@ def auto_get_scatterdata(request, team):
                 jira_obj.save()
     os.remove('TeamSPBackend/api/views/jira/scatterplot.csv')
     os.remove('TeamSPBackend/api/views/jira/cfd.yaml')
-    return HttpResponse(data, content_type="application/json")
+    return 1
 
-def auto_get_throughputdata(request, team):
+def auto_get_throughputdata(team):
     data = []
     with open('TeamSPBackend/api/views/jira/throughput.csv', newline='') as csv_file:
         reader = csv.DictReader(csv_file)
@@ -674,10 +675,9 @@ def auto_get_throughputdata(request, team):
                                           count=int(float(row['count'])))
                 jira_obj.save()
     os.remove('TeamSPBackend/api/views/jira/throughput.csv')
-    os.remove('TeamSPBackend/api/views/jira/cfd.yaml')
-    return HttpResponse(data, content_type="application/json")
+    return 1
 
-def auto_get_histogramdata(request, team):
+def auto_get_histogramdata(team):
     data = []
     with open('TeamSPBackend/api/views/jira/histogram.csv', newline='') as csv_file:
         reader = csv.DictReader(csv_file)
@@ -686,14 +686,13 @@ def auto_get_histogramdata(request, team):
                 'day': row[''],
                 'count': int(float(row['Items']))
             })
-            if not JiraHistogram.objects.filter(space_key=team, day=round(to_unix_time(row['']))).exists():
+            if not JiraHistogram.objects.filter(space_key=team, day=row['']).exists():
                 jira_obj = JiraHistogram(space_key=team,
                                          day=row[''],
                                          count=int(float(row['Items'])))
                 jira_obj.save()
     os.remove('TeamSPBackend/api/views/jira/histogram.csv')
-    os.remove('TeamSPBackend/api/views/jira/cfd.yaml')
-    return HttpResponse(data, content_type="application/json")
+    return 1
 
 def update_scatterdata(jira_url):
     username = atl_username
@@ -761,7 +760,7 @@ def update_histogramdata(jira_url):
                 'day': row[''],
                 'count': int(float(row['Items']))
             })
-            if not JiraHistogram.objects.filter(space_key=team, day=round(to_unix_time(row['']))).exists():
+            if not JiraHistogram.objects.filter(space_key=team, day=row['']).exists():
                 jira_obj = JiraHistogram(space_key=team,
                                          day=row[''],
                                          count=int(float(row['Items'])))
@@ -845,5 +844,5 @@ if 'runserver' in sys.argv:
     request.build_absolute_uri
     request.META['SERVER_NAME'] = request.build_absolute_uri
     utils.start_schedule(auto_get_contributions, 60 * 60 * 24, request)
-   # utils.start_schedule(auto_get_ticket_count_team_timestamped, 60 * 60 * 24, request)
+   #utils.start_schedule(auto_get_ticket_count_team_timestamped, 60 * 60 * 24, request)
     utils.start_schedule(auto_get_three_metricsdata, 60 * 60 * 24, request)

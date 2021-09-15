@@ -36,7 +36,7 @@ class JiraThroughPut(models.Model):
 class JiraHistogram(models.Model):
     id = models.AutoField(primary_key=True)
     space_key = models.CharField(max_length=256, null=False)
-    day = models.CharField(max_length=256,null=False)
+    day = models.CharField(max_length=256, null=False)
     count = models.IntegerField(null=False)
 
     class Meta:
