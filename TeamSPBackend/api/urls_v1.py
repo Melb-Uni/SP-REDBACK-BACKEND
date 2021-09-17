@@ -90,6 +90,9 @@ urlpatterns = [
     path('jira/<team>/ticket_count', jira.get_ticket_count_from_db),
     path('jira/<team>/contributions', jira.get_contributions_from_db),
     path('git/config', jira.setGithubJiraUrl),
+    path('jira/<team>/scatter_data', jira.get_scatterdata_from_db),
+    path('jira/<team>/throughput_data', jira.get_throughputdata_from_db),
+    path('jira/<team>/histogram_data', jira.get_histogramdata_from_db),
 
 
     # legacy but not working
