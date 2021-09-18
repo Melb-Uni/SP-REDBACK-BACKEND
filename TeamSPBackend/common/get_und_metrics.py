@@ -5,7 +5,8 @@ from TeamSPBackend.settings.base_setting import BASE_DIR
 
 # using Understand for analyze Metrics
 # For Linux Server
-UND_PATH = BASE_DIR +'/Understand-6.0.1077-Linux-64bit/scitools/bin/linux64/'
+# UND_PATH = BASE_DIR +'/Understand-6.0.1077-Linux-64bit/scitools/bin/linux64/'
+UND_PATH = '/Applications/Understand.app/Contents/MacOS/'
 sys.path.append(UND_PATH)
 sys.path.append(UND_PATH+'Python/')
 import understand

@@ -1,3 +1,4 @@
+#!/bin/env python3
 from django.apps import AppConfig
 from atlassian import Jira
 import json
@@ -27,6 +28,9 @@ from TeamSPBackend.common.utils import init_http_response_withoutdata
 from TeamSPBackend.common.utils import start_schedule
 from TeamSPBackend.api.views.jira.models import JiraCountByTime
 from TeamSPBackend.api.views.jira.models import IndividualContributions
+from TeamSPBackend.api.views.jira.models import JiraCycleTimeScatter
+from TeamSPBackend.api.views.jira.models import JiraThroughPut
+from TeamSPBackend.api.views.jira.models import JiraHistogram
 from TeamSPBackend.api.views.jira.models import Urlconfig
 from TeamSPBackend.project.models import ProjectCoordinatorRelation
 from TeamSPBackend.coordinator.models import Coordinator
@@ -307,13 +311,9 @@ def auto_get_ticket_count_team_timestamped(request):
         teamList = get_all_url_from_db()
         username = atl_username
         password = atl_password
-        print(teamList)
-        print(username)
-        print(password)
         for i in range(len(teamList)):
             team = teamList[i]
             jira_analytics(username, password, team)
-            print("sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss")
             data = []
             with open('TeamSPBackend/api/views/jira/cfd_modified.csv', newline='') as csv_file:
                 reader = csv.DictReader(csv_file)
@@ -348,7 +348,6 @@ def update_ticket_count_team_timestamped(jira_url):
     username = atl_username
     password = atl_password
     team = get_url_from_db(jira_url)
-
     jira_analytics(username, password, team)
 
     data = []
@@ -388,23 +387,32 @@ def get_contributions(request, team):
         students, names = get_done_contributor_names(get_project_key(team, jira), jira)
         team = get_project_key(team, jira)
         count = []
+        change_log = []
         for student in students:
+            change_log_temp = []
             count.append(jira.jql('assignee = ' + student + ' AND project = "'
                                   + team + '" AND status = "Done"')['total'])
-        result = dict(zip(names, count))
-
+            temp = jira.jql('assignee = ' + student + ' AND project = "'
+                                  + team + '" AND status CHANGED by ' + student)['issues']
+            for element in temp:
+                change_log_temp.append(element['fields']['summary'])
+            change_log.append(change_log_temp)
+        value = zip(count, change_log)
+        result = dict(zip(names, value))
         data = []
-        for name, count in result.items():
+        for name, value in result.items():
+            count, change_log = value
             data.append({
                 'student': name,
-                'done_count': count
+                'done_count': count,
+                'change_log': change_log
             })
             if IndividualContributions.objects.filter(space_key=team, student=name).exists():
                 IndividualContributions.objects.filter(space_key=team, student=name).update(done_count=count)
+                IndividualContributions.objects.filter(space_key=team, student=name).update(change_log=change_log)
             else:
-                jira_obj = IndividualContributions(space_key=team, student=name, done_count=count)
+                jira_obj = IndividualContributions(space_key=team, student=name, done_count=count, change_log=change_log)
                 jira_obj.save()
-
         resp = init_http_response(
             RespCode.success.value.key, RespCode.success.value.msg)
         resp['data'] = data
@@ -421,21 +429,31 @@ def update_contributions(jira_url):
 
     students, names = get_done_contributor_names(team, jira)
     count = []
+    change_log = []
     for student in students:
+        change_log_temp = []
         count.append(jira.jql('assignee = ' + student + ' AND project = "'
                               + team + '" AND status = "Done"')['total'])
-    result = dict(zip(names, count))
+        temp = jira.jql('assignee = ' + student + ' AND project = "'
+                        + team + '" AND status CHANGED by ' + student)['issues']
+        for element in temp:
+            change_log_temp.append(element['fields']['summary'])
+        change_log.append(change_log_temp)
+    value = zip(count, change_log)
+    result = dict(zip(names, value))
 
     data = []
     for name, count in result.items():
         data.append({
             'student': name,
-            'done_count': count
+            'done_count': count,
+            'change_log': change_log
         })
         if IndividualContributions.objects.filter(space_key=team, student=name).exists():
             IndividualContributions.objects.filter(space_key=team, student=name).update(done_count=count)
+            IndividualContributions.objects.filter(space_key=team, student=name).update(change_log=change_log)
         else:
-            jira_obj = IndividualContributions(space_key=team, student=name, done_count=count)
+            jira_obj = IndividualContributions(space_key=team, student=name, done_count=count, change_log=change_log)
             jira_obj.save()
 
     resp = init_http_response(
@@ -462,14 +480,14 @@ def auto_get_contributions(request):
 @require_http_methods(['GET'])
 def get_contributions_from_db(request, team):
     try:
-        coordinator_id = request.session.get('coordinator_id')
         existRecord = list(
-            ProjectCoordinatorRelation.objects.filter(coordinator_id=coordinator_id, space_key=team).values(
+            ProjectCoordinatorRelation.objects.filter(space_key=team).values(
                 'jira_project'))
         url = key_extracter(existRecord[0])
         jira_url = url.get('jira_project')
 
-        allExistRecord = list(IndividualContributions.objects.filter(space_key=jira_url).values('student', 'done_count'))
+        allExistRecord = list(IndividualContributions.objects.filter(space_key=jira_url).values('student', 'done_count',
+                                                                                                'change_log'))
 
         resp = init_http_response(
             RespCode.success.value.key, RespCode.success.value.msg)
@@ -509,6 +527,10 @@ def setGithubJiraUrl(request):
         update_ticket_count_team_timestamped(
             jira_url)  # after setting jira config, try to update jira_count_by_time table at once
         update_contributions(jira_url)
+        update_histogramdata(jira_url)
+        update_scatterdata(jira_url)
+        update_throughputdata(jira_url)
+
 
         resp = init_http_response_withoutdata(
             RespCode.success.value.key, RespCode.success.value.msg)
@@ -523,7 +545,6 @@ def setGithubJiraUrl(request):
 def get_ticket_count_from_db(request, team):
     try:
 
-        print("This is request:::::::",request)
         coordinator_id = request.session.get('coordinator_id')
         existRecord = list(
             ProjectCoordinatorRelation.objects.filter(coordinator_id=coordinator_id, space_key=team).values(
@@ -583,6 +604,232 @@ def jira_analytics(username, password, team):
             else:
                 outfile.write(line)
 
+# new analysis function for sm2
+def jira_analytics2(username, password, team):
+    """Only queries Scatterplot, Histogram, Throughput  with jira-agile-metrics"""
+    copyfile('TeamSPBackend/api/views/jira/cfd-template.yaml', 'TeamSPBackend/api/views/jira/cfd.yaml')
+    with open('TeamSPBackend/api/views/jira/cfd.yaml', 'r') as file:
+        data = file.read()
+        data = data.replace('jirainstance', 'https://jira.cis.unimelb.edu.au:8444')
+        data = data.replace('usernameplace', username)
+        data = data.replace('passwordplace', password)
+        data = data.replace('projectplace', team)
+    with open('TeamSPBackend/api/views/jira/cfd.yaml', 'w') as file:
+        file.write(data)
+    os.system("jira-agile-metrics TeamSPBackend/api/views/jira/cfd.yaml --output-directory TeamSPBackend/api/views/jira")
+    copyfile('TeamSPBackend/api/views/jira/cfd-template.yaml',
+             'TeamSPBackend/api/views/jira/cfd.yaml')  # overwrites sensitive info
+
+def auto_get_three_metricsdata(request):
+    """ Return a HttpResponse, data contains 3 kinds of metrics data with unix time of each day"""
+    try:
+        teamList = get_all_url_from_db()
+        username = atl_username
+        password = atl_password
+        for i in range(len(teamList)):
+            team = teamList[i]
+            jira_analytics2(username, password, team)
+            auto_get_scatterdata(team)
+            auto_get_throughputdata(team)
+            auto_get_histogramdata(team)
+
+        data=[]
+        return HttpResponse(data, content_type="application/json")
+    except Exception:
+        resp = {'code': -1, 'msg': 'error'}
+        return HttpResponse(json.dumps(resp), content_type="application/json")
+
+def auto_get_scatterdata(team):
+    data = []
+    with open('TeamSPBackend/api/views/jira/scatterplot.csv', newline='') as csv_file:
+        reader = csv.DictReader(csv_file)
+        for row in reader:
+            data.append({
+                'completed': round(to_unix_time(row['completed_date'])),
+                'cycle_time': int(float(row['cycle_time'])),
+                'summary': row['summary']
+            })
+            if not JiraCycleTimeScatter.objects.filter(space_key=team, summary=row['summary']).exists():
+                jira_obj = JiraCycleTimeScatter(space_key=team,
+                                                completed=round(to_unix_time(row['completed_date'])),
+                                                cycle_time=int(float(row['cycle_time'])),
+                                                summary=row['summary'])
+                jira_obj.save()
+    os.remove('TeamSPBackend/api/views/jira/scatterplot.csv')
+    os.remove('TeamSPBackend/api/views/jira/cfd.yaml')
+    return 1
+
+def auto_get_throughputdata(team):
+    data = []
+    with open('TeamSPBackend/api/views/jira/throughput.csv', newline='') as csv_file:
+        reader = csv.DictReader(csv_file)
+        for row in reader:
+            data.append({
+                'time': round(to_unix_time(row[''])),
+                'count': int(float(row['count']))
+            })
+            if not JiraThroughPut.objects.filter(space_key=team, time=round(to_unix_time(row['']))).exists():
+                jira_obj = JiraThroughPut(space_key=team,
+                                          time=round(to_unix_time(row[''])),
+                                          count=int(float(row['count'])))
+                jira_obj.save()
+    os.remove('TeamSPBackend/api/views/jira/throughput.csv')
+    return 1
+
+def auto_get_histogramdata(team):
+    data = []
+    with open('TeamSPBackend/api/views/jira/histogram.csv', newline='') as csv_file:
+        reader = csv.DictReader(csv_file)
+        for row in reader:
+            data.append({
+                'day': row[''],
+                'count': int(float(row['Items']))
+            })
+            if not JiraHistogram.objects.filter(space_key=team, day=row['']).exists():
+                jira_obj = JiraHistogram(space_key=team,
+                                         day=row[''],
+                                         count=int(float(row['Items'])))
+                jira_obj.save()
+    os.remove('TeamSPBackend/api/views/jira/histogram.csv')
+    return 1
+
+def update_scatterdata(jira_url):
+    username = atl_username
+    password = atl_password
+    team = get_url_from_db(jira_url)
+    jira_analytics2(username, password, team)
+
+    data = []
+    with open('TeamSPBackend/api/views/jira/scatterplot.csv', newline='') as csv_file:
+        reader = csv.DictReader(csv_file)
+        for row in reader:
+            data.append({
+                'completed': round(to_unix_time(row['completed_date'])),
+                'cycle_time': int(float(row['cycle_time'])),
+                'summary': row['summary']
+            })
+            if not JiraCycleTimeScatter.objects.filter(space_key=team, summary=row['summary']).exists():
+                jira_obj = JiraCycleTimeScatter(space_key=team,
+                                                completed=round(to_unix_time(row['completed_date'])),
+                                                cycle_time=int(float(row['cycle_time'])),
+                                                summary=row['summary'])
+                jira_obj.save()
+    os.remove('TeamSPBackend/api/views/jira/scatterplot.csv')
+    os.remove('TeamSPBackend/api/views/jira/throughput.csv')
+    os.remove('TeamSPBackend/api/views/jira/histogram.csv')
+    os.remove('TeamSPBackend/api/views/jira/cfd.yaml')
+    return 1;
+
+def update_throughputdata(jira_url):
+    username = atl_username
+    password = atl_password
+    team = get_url_from_db(jira_url)
+    jira_analytics2(username, password, team)
+
+    data = []
+    with open('TeamSPBackend/api/views/jira/throughput.csv', newline='') as csv_file:
+        reader = csv.DictReader(csv_file)
+        for row in reader:
+            data.append({
+                'time': round(to_unix_time(row[''])),
+                'count': int(float(row['count'])),
+            })
+            if not JiraThroughPut.objects.filter(space_key=team, time=row['']).exists():
+                jira_obj = JiraThroughPut(space_key=team,
+                                          time=round(to_unix_time(row['completed_date'])),
+                                          count=int(float(row['count'])))
+                jira_obj.save()
+    os.remove('TeamSPBackend/api/views/jira/throughput.csv')
+    os.remove('TeamSPBackend/api/views/jira/scatterplot.csv')
+    os.remove('TeamSPBackend/api/views/jira/histogram.csv')
+    os.remove('TeamSPBackend/api/views/jira/cfd.yaml')
+    return 1;
+
+def update_histogramdata(jira_url):
+    username = atl_username
+    password = atl_password
+    team = get_url_from_db(jira_url)
+    jira_analytics2(username, password, team)
+
+    data = []
+    with open('TeamSPBackend/api/views/jira/histogram.csv', newline='') as csv_file:
+        reader = csv.DictReader(csv_file)
+        for row in reader:
+            data.append({
+                'day': row[''],
+                'count': int(float(row['Items']))
+            })
+            if not JiraHistogram.objects.filter(space_key=team, day=row['']).exists():
+                jira_obj = JiraHistogram(space_key=team,
+                                         day=row[''],
+                                         count=int(float(row['Items'])))
+                jira_obj.save()
+    os.remove('TeamSPBackend/api/views/jira/histogram.csv')
+    os.remove('TeamSPBackend/api/views/jira/throughput.csv')
+    os.remove('TeamSPBackend/api/views/jira/scatterplot.csv')
+    os.remove('TeamSPBackend/api/views/jira/cfd.yaml')
+    return 1;
+
+@require_http_methods(['GET'])
+def get_scatterdata_from_db(request, team):
+    try:
+
+        existRecord = list(
+            ProjectCoordinatorRelation.objects.filter(space_key=team).values(
+                'jira_project'))
+        url = key_extracter(existRecord[0])
+        jira_url = url.get('jira_project')
+
+        cycletimeRecord = list(
+            JiraCycleTimeScatter.objects.filter(space_key=jira_url).values('completed', 'cycle_time', 'summary'))
+        resp = init_http_response(
+            RespCode.success.value.key, RespCode.success.value.msg)
+        resp['data'] = cycletimeRecord
+        return HttpResponse(json.dumps(resp), content_type="application/json")
+    except Exception:
+        resp = {'code': -1, 'msg': 'error'}
+        return HttpResponse(json.dumps(resp), content_type="application/json")
+
+@require_http_methods(['GET'])
+def get_throughputdata_from_db(request, team):
+    try:
+
+        existRecord = list(
+            ProjectCoordinatorRelation.objects.filter(space_key=team).values(
+                'jira_project'))
+        url = key_extracter(existRecord[0])
+        jira_url = url.get('jira_project')
+
+        timeCountRecord = list(
+            JiraThroughPut.objects.filter(space_key=jira_url).values('time', 'count'))
+        resp = init_http_response(
+            RespCode.success.value.key, RespCode.success.value.msg)
+        resp['data'] = timeCountRecord
+        return HttpResponse(json.dumps(resp), content_type="application/json")
+    except Exception:
+        resp = {'code': -1, 'msg': 'error'}
+        return HttpResponse(json.dumps(resp), content_type="application/json")
+
+@require_http_methods(['GET'])
+def get_histogramdata_from_db(request, team):
+    try:
+
+        existRecord = list(
+            ProjectCoordinatorRelation.objects.filter(space_key=team).values(
+                'jira_project'))
+        url = key_extracter(existRecord[0])
+        jira_url = url.get('jira_project')
+
+        historyRecord = list(
+            JiraHistogram.objects.filter(space_key=jira_url).values('day', 'count'))
+        resp = init_http_response(
+            RespCode.success.value.key, RespCode.success.value.msg)
+        resp['data'] = historyRecord
+        return HttpResponse(json.dumps(resp), content_type="application/json")
+    except Exception:
+        resp = {'code': -1, 'msg': 'error'}
+        return HttpResponse(json.dumps(resp), content_type="application/json")
+
 
 
 if 'runserver' in sys.argv:
@@ -593,4 +840,5 @@ if 'runserver' in sys.argv:
     request.build_absolute_uri
     request.META['SERVER_NAME'] = request.build_absolute_uri
     utils.start_schedule(auto_get_contributions, 60 * 60 * 24, request)
-    utils.start_schedule(auto_get_ticket_count_team_timestamped, 60 * 60 * 24, request)
+   #utils.start_schedule(auto_get_ticket_count_team_timestamped, 60 * 60 * 24, request)
+    utils.start_schedule(auto_get_three_metricsdata, 60 * 60 * 24, request)
