@@ -41,3 +41,31 @@ class IndividualConfluenceContribution(models.Model):
 
     class Meta:
         db_table = 'individual_confluence_contribution'
+
+class IndividualContributionPages(models.Model):
+    space_key = models.CharField(max_length=256)
+    page_name = models.CharField(max_length=256)
+    user_id = models.CharField(max_length=256)
+    user_name = models.CharField(max_length=256)
+
+    class Meta:
+        db_table = 'individual_confluence_pages'
+
+class RecentPages(models.Model):
+    space_key = models.CharField(max_length=256)
+    page_name = models.CharField(max_length=256)
+    updated_time = models.CharField(max_length=256)
+    link = models.CharField(max_length=2560)
+
+    class Meta:
+        db_table = 'recent_pages'
+
+class RecentComments(models.Model):
+    space_key = models.CharField(max_length=256)
+    page_name = models.CharField(max_length=256)
+    updated_time = models.CharField(max_length=256)
+    creator = models.CharField(max_length=256)
+    content = models.CharField(max_length=2560)
+
+    class Meta:
+        db_table = 'confluence_comment'
