@@ -48,3 +48,6 @@ To create new models and/or APIs utilizing them, kindly follow the current direc
 ## Change Log
 ### Version 1 (September 19th, 2021)
 
+2021.9.19
+- Create a new release, comp90082_2021_s2_sp_v1.
+
