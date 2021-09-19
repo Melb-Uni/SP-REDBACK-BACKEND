@@ -59,12 +59,19 @@ To create new models and/or APIs utilizing them, kindly follow the current direc
 2021.9.14
 
 - Fix one bug about cannot open git in process
+- Update the confluence part and could get the confluence pages updated by each user
 
 2021.9.15
 
 - Fix one bug on obtaining histogram data of Jira
 - Fix Jira API bugs
 - Finish the get_git_commits function
+- Update the confluence part and could get the recently updated pages of the project
+- Fix a bug in indivadual contribution relative function
+
+2021.9.16
+
+- Update the confluence part and could get all the comments in a project.
 
 2021.9.19
 
