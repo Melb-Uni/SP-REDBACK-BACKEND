@@ -54,11 +54,19 @@ To create new models and/or APIs utilizing them, kindly follow the current direc
 2021.9.9
 - Update the code of Jira process part and get three new metric data
 - Obtain the summary of Jira issue in the individual contribution 
+- fix git config
+
+2021.9.14
+
+- Fix one bug about cannot open git in process
 
 2021.9.15
+
 - Fix one bug on obtaining histogram data of Jira
 - Fix Jira API bugs
+- Finish the get_git_commits function
 
 2021.9.19
+
 - Create a new release, comp90082_2021_s2_sp_v1.
 
