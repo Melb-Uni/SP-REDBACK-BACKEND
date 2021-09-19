@@ -48,6 +48,17 @@ To create new models and/or APIs utilizing them, kindly follow the current direc
 ## Change Log
 ### Version 1 (September 19th, 2021)
 
+2021.9.6
+- Fixed the SSLError
+
+2021.9.9
+- Update the code of Jira process part and get three new metric data
+- Get the summary of Jira issue in the individual contribution 
+
+2021.9.15
+- Fixed one bug on obtaining histogram data of Jira
+- Fixed Jira API bugs
+
 2021.9.19
 - Create a new release, comp90082_2021_s2_sp_v1.
 
