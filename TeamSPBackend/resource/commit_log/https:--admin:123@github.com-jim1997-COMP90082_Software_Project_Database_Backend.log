@@ -1,0 +1,1253 @@
+993a4087862fb717ed4c6f4605080879fa62d54f
+pete965
+1622534642
+docs
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+fce6b5c4c2a20ec3b3fe9c5e8aa5fb71e57a77e6
+pete965
+1622208097
+doc update for sprint 2
+ 11 files changed, 6947 deletions(-)
+
+7f1ba11b5d55ddaf0293fa2995bea04125ce0a52
+pete965
+1622176042
+fail information edit
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+6e0ac97b65666b7cad0d23753281b6f242fbd30f
+pete965
+1622175776
+session
+ 1 file changed, 2 insertions(+)
+
+a334c9e470013b9a1c2d0e69757f3dc5971d6c6c
+pete965
+1622175120
+super user
+ 1 file changed, 5 insertions(+)
+
+668f06c3e12d8a7b6c7c1637bff5cad4cb1962b0
+pete965
+1622173071
+fail information edit
+ 1 file changed, 2 insertions(+)
+
+37b11e1bbbdc62a98780cf3341ca10a206b54579
+pinwang
+1622136969
+get ip dynamically
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+170232cb97eacd7e6460e64c683e524516217171
+Jerry-Shan
+1622136250
+Deploy understand to client VM - Acceptance Testing
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+6dfbe87da8f1a7e6890844a661619da985e02f32
+Aquila Qin
+1622107656
+Added migration file for jira model changes
+ 1 file changed, 23 insertions(+)
+
+15593615941418425883fa860b01117171938fc3
+Aquila Qin
+1622073447
+fixed contribution from db to incorporate coordinator id
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+f570c8b328619a9f25919c73fa7a0ca87a1fe9c9
+Aquila Qin
+1622070347
+Refactored table col name, added immediate update for both APIs
+ 2 files changed, 43 insertions(+), 11 deletions(-)
+
+bc23e0fb9ff4a6bd83ba67238de4d964676a277b
+pete965
+1622044175
+fail information edit
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+fc3a96e8b4de9a00fcb64017f5fe3b05baeef810
+pete965
+1622043697
+fail information edit
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+122ff44402ed2467d3efff4940576fad03f0e02f
+pete965
+1622043463
+logging url
+ 1 file changed, 8 insertions(+), 6 deletions(-)
+
+e559db5fa4da35b7a853344d459a5f5149b18178
+pete965
+1622042334
+bugfix
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+e0117d0a5b86fee027e22caf744657a4265883ff
+Aquila Qin
+1622041146
+Ditched exception catching, force install CA chain
+ 1 file changed, 15 insertions(+), 19 deletions(-)
+
+7e1fcc86ea5f1515ed7eb7ea546a7aecc27a9442
+xiefx
+1622039858
+convert to unix_time
+ 1 file changed, 13 insertions(+), 13 deletions(-)
+
+ed796e4e96322332b6d5d21044973cfaea6b89db
+Jerry-Shan
+1622003430
+get metrics using extra python script and store it into .json
+ 3 files changed, 56 insertions(+), 12 deletions(-)
+
+40cf4e06f543c3387fb8ed757ce73c3a8589f99e
+Jerry-Shan
+1621961357
+bugfix: git commit count
+ 1 file changed, 1 insertion(+)
+
+e428e42255600d004a4966769115dee394d1abc0
+xiefx
+1621939158
+fix setURL, regex
+ 7 files changed, 16 insertions(+), 173 deletions(-)
+
+3d6b00b7a263d467cbb09ead21c38d184b9c158a
+xiefx
+1621936995
+fix regex
+ 5 files changed, 201 insertions(+), 13 deletions(-)
+
+ac9a477993c30da039b07049c37b4c5a7ccd9511
+Jerry-Shan
+1621923198
+bugfix: git commit count
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+f31f57787248aea5e2c689af442a4965cfa74ae8
+Jerry-Shan
+1621922663
+bugfix: git commit count
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+7119065925a008bbbf87e0eb57e880430ed9f9ca
+Aquila Qin
+1621918904
+code re organize, refactor, file removal
+ 21 files changed, 84 insertions(+), 630 deletions(-)
+
+63e8f8f84a4309d3195b11c6381643c1439e063a
+Jerry-Shan
+1621915788
+bugfix:add git_url filter to find the correct relation
+ 1 file changed, 9 insertions(+), 9 deletions(-)
+
+ce08b80f83244e55b7b9c41c735b910834a7fbd7
+xiefx
+1621890972
+ticket_count
+ 7 files changed, 305 insertions(+), 267 deletions(-)
+
+f09d8d96a4f6a15425c670712c6ff6ad17370ce5
+Jerry-Shan
+1621879870
+bugfix:use coordinator_id and space_key to find the relation
+ 1 file changed, 10 insertions(+), 6 deletions(-)
+
+ea059e1aa5dc9d9e389ef287cd0a896b96ab333b
+xiefx
+1621857834
+fix jira setURL
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+e0318c8209b8f6ba28f51690a757be5a41a9a287
+chengzisheng
+1621855572
+change git response
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+edb72bbd057d746759817c8ce2f715a62bd1308e
+pinwang
+1621772722
+fix bug -- user list show users in other spaces
+ 2 files changed, 1 insertion(+), 2 deletions(-)
+
+a0c6c9fa9d238696842ba5ae0988413d77e1f5c1
+Jerry-Shan
+1621770113
+Bugfix-GitMetrics
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+29640d3d3228cd625e6d3dcd0e78aea1b6c8f0d3
+Jerry-Shan
+1621614493
+Bug-fixed:the Path of git repo need to be the same with pull_repo()
+ 1 file changed, 2 insertions(+)
+
+56cc9230c33a0cd34485dd2068793c896232e6b2
+xiefx
+1621532187
+update setGithubJiraUrl and individual contribution for testing
+ 1 file changed, 6 insertions(+), 7 deletions(-)
+
+3aa93b467763d8fa0e5b5c360c18d788d733f6ac
+Jerry-Shan
+1621527003
+migration of git_metrics table
+ 1 file changed, 31 insertions(+)
+
+0c9a35247c55784dae5e396d482d52ec7dbdd548
+Jerry-Shan
+1621511206
+Bug-fixed:Get Git Metrics by Understand and Add cost time log
+ 1 file changed, 10 insertions(+), 3 deletions(-)
+
+38e13b05b33244edfd2d7e0c8f9f9a58517019a5
+Aquila Qin
+1621484842
+windows compatibility, re-organized code
+ 1 file changed, 33 insertions(+), 12 deletions(-)
+
+518709aadcbd6d80cef3cef0f6f27a70f68465fa
+Aquila Qin
+1621483588
+Added python package openssl
+ 1 file changed, 2 insertions(+)
+
+ac0f416fba20f19ec99033a112877facaa0bf692
+Aquila Qin
+1621483241
+Refine local cert chain installing process
+ 1 file changed, 35 insertions(+), 10 deletions(-)
+
+20c13bdfddd4bea5b592b44edb83847da8e52911
+pinwang
+1621477025
+fix startup bug
+ 1 file changed, 8 insertions(+), 18 deletions(-)
+
+33fc9f2b7e04d9ff8c657893a2f890597fb2e8e5
+pinwang
+1621475641
+fix startup bug
+ 1 file changed, 43 insertions(+), 17 deletions(-)
+
+8118da020a71131e847b76ed5dce3c5df9db1c85
+pinwang
+1621472999
+fix startup bug
+ 1 file changed, 9 insertions(+), 3 deletions(-)
+
+1225a0e6e70db67c46e14d218d2639c743b8e668
+Aquila Qin
+1621430151
+Use local CA chain
+ 2 files changed, 135 insertions(+)
+
+8051c3cea74a36720afbef5e92070f0c1a7616a8
+xiefx
+1621429615
+add migration file
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+630d102e4e80accf83e37e727d468eb9b495ca9a
+xiefx
+1621429467
+jira fix migration
+ 6 files changed, 101 insertions(+), 54 deletions(-)
+
+da5c9eca6f656783632e53084563a99114e08ef8
+pinwang5776
+1621426084
+fix migrate history
+ 3 files changed, 50 insertions(+), 22 deletions(-)
+
+38994602a46f49aa4d651ae540d3b7e0c677bec1
+Jerry-Shan
+1621424469
+bug-fix of Git Metrics
+ 2 files changed, 23 insertions(+), 17 deletions(-)
+
+62b83b5ccd904555c8e4745f7ee07bba99b6fe3c
+Jerry-Shan
+1621419913
+Completed Get Git Metrics by Understand
+ 1 file changed, 19 insertions(+), 19 deletions(-)
+
+9552fd9a61fca4d7c3f26830cd3fd03b1f82ca32
+pinwang5776
+1621413708
+add check user login decorator and decorate all confluence related apis
+ 3 files changed, 27 insertions(+), 3 deletions(-)
+
+e447b6914f1c6d93f8059f3b274ba3bb8c394435
+pinwang5776
+1621411838
+add time log for import project
+ 1 file changed, 11 insertions(+), 1 deletion(-)
+
+ed0b39e8e3e7004bfdfeefba8571502d6638b6ac
+pinwang5776
+1621407563
+remove 'admin' from page contribution; delete existed space info before insert one
+ 1 file changed, 11 insertions(+), 3 deletions(-)
+
+8d4fc8b5f33ab338ced45fb964144d7a9672cfe9
+Aquila Qin
+1621347606
+get_member_names -> get_done_contributor_names
+ 1 file changed, 19 insertions(+), 11 deletions(-)
+
+bd798e9405305966b1ae803b6c301abcc9fb7a69
+Jingdan Cui
+1621322518
+update inserting meeting minutes function
+ 4 files changed, 32 insertions(+), 20 deletions(-)
+
+5d27151621f7f22fcefc199adbe305e8ce89d439
+Jerry-Shan
+1621276916
+sjz-Git-metrics: test Understand in Linux Server
+ 1 file changed, 18 insertions(+), 17 deletions(-)
+
+9f463157481459120166420afeae1eb47b701a9a
+Jerry-Shan
+1621276786
+sjz-Git-metrics: local test pass (without Understand package)
+ 3 files changed, 45 insertions(+), 21 deletions(-)
+
+415d67bb68f81243c9a60f63fd9d0f04bd6b810a
+pinwang
+1621266094
+header set cookie
+ 2 files changed, 3 insertions(+), 1 deletion(-)
+
+6a721d39e5c93997f8e90b54b9c708b20c8f17a0
+pinwang
+1621265575
+header
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+92d6d6cd77fca170d47564ee6ea1a53bf0b7f6ac
+pinwang5776
+1621249789
+remove redundant
+ 1 file changed, 1 deletion(-)
+
+49100fda836edfbf5dddb0729f568e4e5b4f3f02
+pinwang5776
+1621249428
+import projects
+ 1 file changed, 1 insertion(+)
+
+89dd4fa5a96467900cb763860779868f16a11842
+pinwang5776
+1621249225
+import projects & update coordinator table
+ 5 files changed, 47 insertions(+), 4 deletions(-)
+
+2d0311c3fe7d6d72094b6d6a3541089d74eb6c4a
+pinwang5776
+1621240709
+update delete url
+ 1 file changed, 3 insertions(+), 4 deletions(-)
+
+54d5ba15df97d8f8bd1b3f2bfa78ccd97bc3f61d
+pinwang5776
+1621238550
+update import project
+ 3 files changed, 12 insertions(+), 45 deletions(-)
+
+e5348aee7b4309946592eb40acefb5d8c28cd2ba
+ChongjingZhang
+1621225472
+fix bugs
+ 2 files changed, 16 insertions(+), 19 deletions(-)
+
+3bb94088e978ece59b9cb4fec95b801c51ae9aaf
+ChongjingZhang
+1621221878
+fix bug
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+9cee8d9963d13fcbf2362652f8ece5867be83a0f
+Jerry-Shan
+1621179452
+sjz-git_metric_api_v3
+ 4 files changed, 89 insertions(+), 40 deletions(-)
+
+47f3ddf6c2060e138f10cb61249f01f539601c19
+ChongjingZhang
+1621130752
+test
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+c567d895f184576d4f755c111deaf20b43a0d1d5
+pinwang
+1621096324
+remove confluence username and password from database.
+ 4 files changed, 85 insertions(+), 83 deletions(-)
+
+f442cf3eddb70207fca60254e804ad5a8cab4392
+chengzisheng
+1621088688
+update update_individual_commit
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+07a18ab5b71da9a37b656a7cd957b90f9a6b5f96
+pete965
+1621045075
+cre
+ 3 files changed, 46 insertions(+), 2 deletions(-)
+
+fc30d7d628f7658aa5f58941fd01a73927443215
+pete965
+1621011331
+cre change db
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+30105a0c8cb96681e96995de5e163c0045a9b175
+Jerry-Shan
+1620990217
+sjz-metric_api_v2
+ 1 file changed, 20 insertions(+)
+
+7b3ed643002646ded96d978832fec7f8fcc80426
+ChongjingZhang
+1620974965
+optimize authentication exception problems, update git_commit code and add sort function
+ 1 file changed, 4 insertions(+)
+
+8a3b84c6627b35ef89f8facec82bdb78cf349883
+Jingdan Cui
+1620972731
+update existing meeting functions & create insert_meeting function
+ 1 file changed, 26 insertions(+), 20 deletions(-)
+
+7267315cc20eaf550d8251b09e55c1ce3c426a6c
+Jingdan Cui
+1620970930
+update get_imported_project function
+ 1 file changed, 4 insertions(+), 7 deletions(-)
+
+7ca6a8e4c15a0756ade35901b97cddaad15f508d
+Aquila Qin
+1620881324
+performance optimization with limit=0
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+bdb7455ca224afa844b86d8b1f92bdc2b0dcf708
+chengzisheng
+1620831356
+update git Authentication
+ 1 file changed, 9 insertions(+)
+
+b9698acd0886fae45af5e60936d3a0c4a04e2062
+ChongjingZhang
+1620830374
+optimize authentication exception problems, update git_commit code and add sort function
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+42781e67a784e2ae2a3fe6ab239f81c5725cab76
+ChongjingZhang
+1620829818
+optimize authentication exception problems, update git_commit code and add sort function
+ 5 files changed, 126 insertions(+), 61 deletions(-)
+
+4023aa47332dc8f876dd30bfce3cd0348c7c795a
+chengzisheng
+1620805257
+update get_git_commits
+ 2 files changed, 7 insertions(+), 5 deletions(-)
+
+44db4a1adaa8f1c2c04135607349d97e50485ec4
+xiefx
+1620796894
+delete ''create new url'', text -- json, delete response[''data'']
+ 3 files changed, 31 insertions(+), 37 deletions(-)
+
+c23956535bb4bbb57a0a2700deb42a47806b00d0
+chengzisheng
+1620795447
+change git_individual_commit return type to int
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+b877ae86b9d944e452c4fb9dcdea736389ea1ef8
+chengzisheng
+1620794668
+change git_individual_commit return type to int
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+8ae9ebede0227514e3f3ed14219b4091130ce8a3
+pete965
+1620752485
+sso
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+c0ab429fb4c2c2b62b489acad02c91c1c601df93
+pinwang
+1620750737
+response without 'data'
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+ec5e3c9976e14a34e95b309594ff13313ba2c84e
+pinwang
+1620750202
+delete imported project
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+dfb5c1499330297708c525454d12228b7d393558
+pinwang
+1620750088
+delete imported project
+ 2 files changed, 15 insertions(+), 2 deletions(-)
+
+35fcc3e0229e4890cd1cf2418e5e5c750ebc503a
+xiefx
+1620746988
+change URL for api setGithubAndJiraUrl
+ 3 files changed, 12 insertions(+), 9 deletions(-)
+
+39268add11790dab8550ad99918f7488068dbc92
+pete965
+1620744258
+sso
+ 1 file changed, 33 insertions(+), 1 deletion(-)
+
+9ba9ffc1f8f47383acc120fe645c4c0bc17d59c0
+Jerry-Shan
+1620738190
+1. delete git_clone and reuse pull_repo() written by Chongjing Zhang 2. Mock API data for cooperative testing with front-end
+ 2 files changed, 6 insertions(+), 20 deletions(-)
+
+93d4359bb9785a3939d8e746b392cfdc69dd1c5a
+Jerry-Shan
+1620736050
+edit some comments
+ 3 files changed, 5 insertions(+), 6 deletions(-)
+
+69a53a6054a5dd9d57f9bdb9a87cbb2d43eb0330
+pinwang
+1620722544
+add http:// to url
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+ec603843ec03279fc45ded6991b488104a1ccc99
+pinwang
+1620713437
+delete print
+ 1 file changed, 1 deletion(-)
+
+1bd2ab72ea7e4a59cba81288689dc33f28665f7f
+pinwang
+1620713359
+delete comment
+ 1 file changed, 2 deletions(-)
+
+47c034a8930141529bf4505ace38844e1533256e
+pinwang
+1620712641
+store images; start file server; and return url to images stored on the server
+ 6 files changed, 71 insertions(+), 14 deletions(-)
+
+dc74e26ea260c7334243b8291fbb7ea739477deb
+xiefx
+1620639373
+jira login
+ 2 files changed, 14 insertions(+), 9 deletions(-)
+
+c63f0915ff4ae60cbbbb1b6abe562ed2179bec06
+pete965
+1620632690
+cre
+ 1 file changed, 2 insertions(+)
+
+b2f2df8a3831dc2a9816c4b61c8fd365ef23bfe2
+pinwang5776
+1620631069
+debug
+ 1 file changed, 1 insertion(+), 7 deletions(-)
+
+330d56e76ac786b733159cbddd0cc9214c7c718e
+xiefx
+1620630550
+store info in coordinator and relation table based on requirements
+ 1 file changed, 24 insertions(+), 12 deletions(-)
+
+6cdfce581a93e125bea0c48eede919f181fdb415
+pinwang
+1620574614
+Get individual contribution on Confluence page counts.
+ 5 files changed, 119 insertions(+), 62 deletions(-)
+
+c66ecf22d64885044cdc10390b037a97185e8daa
+chengzisheng
+1620573704
+fix git individual
+ 1 file changed, 7 insertions(+), 5 deletions(-)
+
+417f2cca421cfd2ff0bbfafd91fcf73e7cf2463b
+ChongjingZhang
+1620572918
+delete log files
+ 8 files changed, 2551 deletions(-)
+
+746d08b38b0c2575729249b12704f0be9196b26f
+ChongjingZhang
+1620572059
+git authentication and auto update
+ 10 files changed, 2645 insertions(+), 7 deletions(-)
+
+26d9b089bdd518fdd82abde358ec00fee742a84a
+ChongjingZhang
+1620572059
+git authentication and auto update
+ 3 files changed, 95 insertions(+), 7 deletions(-)
+
+147f0a420e15d083a1378cc640ef95051055c037
+Jerry-Shan
+1620561824
+Create git metrics API and mock data for testing
+ 2 files changed, 22 insertions(+), 1 deletion(-)
+
+744785a5fd8a11ad6522b7abae5dfa74a566b3ef
+Jerry-Shan
+1620553817
+Add git clone with git update method, preparing for git metrics
+ 2 files changed, 24 insertions(+), 1 deletion(-)
+
+6b46aced7a314d03b0a2fd5013dd2c3932ff7777
+Jerry-Shan
+1620553741
+Add git_metrics data table by class Git_Metrics in model
+ 1 file changed, 14 insertions(+)
+
+9621c22f944c3eb1d7a9766a6a7fc0822cab067e
+xiefx
+1620546010
+update sprint2 setGithubAndJirlURL, add attributes in table url_config for username and password
+ 4 files changed, 57 insertions(+), 20 deletions(-)
+
+4a7c601844c9602cbee0d7772131e5e66d974343
+chengzisheng
+1620545926
+Annotate git timing tasks
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+e370a5dc17dbd8cf30aeaabb33211df24ca5b70e
+chengzisheng
+1620544138
+fix getting individual commit module
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+247eb860e5ef6f5887b3940666ad97a8b5ea1650
+chengzisheng
+1620538896
+fix getting individual commit module
+ 1 file changed, 1 insertion(+)
+
+0377f04d667771f5e15549a9531cdd871fb44aad
+xiefx
+1620458773
+update test case
+ 3 files changed, 24 insertions(+), 4 deletions(-)
+
+27f875b5a19115dda9e897b2ac1dc6d7db85d981
+xiefx
+1620383982
+delete comma
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+4532a5352ef472c729d1f0d6b396a0ec60133ed4
+xiefx
+1620383833
+modified table 'individualcontribution', get data from database
+ 4 files changed, 73 insertions(+), 11 deletions(-)
+
+08cf36b0c99b81430611b838253fdc36e794bc4d
+xiefx
+1620379520
+create models, connect jira api to database, run methon on server startup, bug fix
+ 9 files changed, 230 insertions(+), 7 deletions(-)
+
+dc62a3a9be036642290291a260ba358e675cb207
+pinwang
+1620291649
+add total users
+ 2 files changed, 6 insertions(+), 10 deletions(-)
+
+92f1829efcd659965c8e7c86921a018507c7d274
+pete965
+1620285453
+edit bug for v11
+ 1 file changed, 1 deletion(-)
+
+4f0535b0805903337c4b97c3ef487066be07a6e2
+pinwang
+1620283133
+the atl username and password is fixed to be the first coordinator's
+ 1 file changed, 4 insertions(+), 5 deletions(-)
+
+87b996bc6b2950605bb6333a052edeb29b2a808f
+ChongjingZhang
+1620280330
+some modify
+ 2 files changed, 2 insertions(+), 7 deletions(-)
+
+a7dc41bf72d57d489f29e6bd23af328ba04a2195
+chengzisheng
+1620279374
+update getting individual commit module
+ 2 files changed, 27 insertions(+), 15 deletions(-)
+
+f3f5b24aea2d7a9b11e5e1ffb0bc35f122c43564
+ChongjingZhang
+1620201273
+modify for solving conflict
+ 1 file changed, 4 deletions(-)
+
+161730204baf585549dc7762046529574f717a3d
+ChongjingZhang
+1619717286
+zcj modify: implement all logic of getting git commits
+ 1 file changed, 46 deletions(-)
+
+08807599424c621f0ffc9c28f4ae116f83c6fe02
+ChongjingZhang
+1619717092
+zcj modify
+ 4 files changed, 115 insertions(+), 56 deletions(-)
+
+f6ab6d305f3f70bc099e52574eb3dc63950be77a
+chengzisheng
+1619707051
+fix bug for individual commit
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+2f701ed3d06e6df7a83716e906b1d1bfdc183d0f
+chengzisheng
+1619696830
+complete api for getting individual commit counts(getting url from project table)
+ 2 files changed, 12 insertions(+), 14 deletions(-)
+
+7a12eb78811d034e8f4dd7269f7d47687207b7b9
+chengzisheng
+1619678343
+complete api for getting individual commit counts(getting url from project table)
+ 3 files changed, 55 insertions(+), 78 deletions(-)
+
+635640d3c202391cf9397cb231014398aeaf1a4b
+ChongjingZhang
+1619696469
+zcj modify
+ 1 file changed, 10 insertions(+)
+
+d5adb6366192ea504536bf23fb77eea70876dced
+ChongjingZhang
+1619695944
+zcj modify
+ 6 files changed, 42 insertions(+), 34 deletions(-)
+
+f25418b534b104eb4b32e0ede9b572c4a53ae47c
+ChongjingZhang
+1619545138
+zcj modify
+ 2 files changed, 10 insertions(+), 1 deletion(-)
+
+e21ebfe95333980d1cd30f590f11f5ce2c88e6da
+ChongjingZhang
+1619545080
+zcj modify
+ 1 file changed, 33 insertions(+), 23 deletions(-)
+
+56b99376f5bcca78e0496dedac9119af5813e6e9
+chengzisheng
+1619529390
+complete database write/read function for getting individual commit counts
+ 3 files changed, 16 insertions(+), 5 deletions(-)
+
+88c40dac988d9c3d2afc4789a291bcb37e1773a5
+chengzisheng
+1619527449
+update git database setting
+ 6 files changed, 71 insertions(+), 21 deletions(-)
+
+ec722740a7907ec3386b3e162fd8d7cc211487b6
+chengzisheng
+1619494504
+Create database for git
+ 9 files changed, 54 insertions(+), 3 deletions(-)
+
+778deefda760977168d308904e5627955350c466
+chengzisheng
+1619415819
+Add comment for function get_git_individual_commits
+ 1 file changed, 5 insertions(+)
+
+f8bfd4c4ba5ab590a41c4676af87f698ddf4b27f
+chengzisheng
+1619336398
+Add api for getting individual commit
+ 2 files changed, 30 insertions(+), 2 deletions(-)
+
+4c12248beea9b8220e1bfa7a94068158a6623ac1
+ChongjingZhang
+1619421088
+zcj modify
+ 3 files changed, 16 insertions(+), 3 deletions(-)
+
+5b96e0a7a7c5ecc777730893af7cf8054b22c71a
+pinwang
+1620013033
+remove test post method
+ 1 file changed, 1 insertion(+), 14 deletions(-)
+
+aa882f21c2985653436d4d542a14c8323b6dfc06
+pinwang
+1620012964
+add insert method for import project function, limit the user list length
+ 1 file changed, 44 insertions(+), 39 deletions(-)
+
+d0be647b06525eea2f6b76bb975c438c7e5bbe4f
+pinwang
+1619970005
+add insert method for import project function, limit the user list length
+ 2 files changed, 39 insertions(+), 4 deletions(-)
+
+07d2a2a7e7503a0840c9c33461f2de7d80b8784b
+Aquila Qin
+1619789310
+Corrected timestamp behaviour, long execution time may not produce response in time
+ 1 file changed, 37 insertions(+), 10 deletions(-)
+
+b653a1068fcba6296fb01dc237ca908adc4852a7
+pete965
+1619785182
+doc update
+ 4 files changed, 6947 insertions(+)
+
+451f82a6eeb5afe6d4722a1681b99c0a8fe44aa2
+pete965
+1619699638
+models
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+acf51ea563f67fc6cb703c13683b667e86023113
+Jingdan Cui
+1619697744
+update get_imported_project function
+ 2 files changed, 42 insertions(+)
+
+dd43c4d89740793d6d77002536460c61ed2d0caf
+pinwang5776
+1619675658
+Update confluence.py
+ 1 file changed, 2 deletions(-)
+
+23e93bca9de0e0d921ff9956e7707dedbaa86329
+pinwang
+1619669364
+todo
+ 1 file changed, 1 insertion(+)
+
+d3df4a66f6daf4187f31675c874969f65280e782
+pete965
+1619663630
+models
+ 1 file changed, 11 insertions(+), 1 deletion(-)
+
+677087a698002c81d9ffe59062b5ccc4bd797c75
+pete965
+1619629540
+models
+ 3 files changed, 37 insertions(+), 9 deletions(-)
+
+6a5f66a55fd6a3600aacd4976c7a53078de23e98
+pinwang
+1619627163
+update database using coordinator table and coordinator-space table
+ 1 file changed, 37 insertions(+), 33 deletions(-)
+
+43f4a5645e8058ceea223eea6ba3d9ae60e79d7b
+Jingdan Cui
+1619623795
+update update_meeting_minutes function
+ 1 file changed, 41 insertions(+), 36 deletions(-)
+
+5b9fb9f6ea58b4f02fc86f600a89c68f4907b445
+Aquila Qin
+1619612944
+Persisted changes back to urls_v1.py, removed urls_v11.py
+ 3 files changed, 28 insertions(+), 105 deletions(-)
+
+a7f01bdf794b76edb4c772387bee356fbb9d8b81
+pinwang5776
+1619609942
+update database as transaction
+ 1 file changed, 46 insertions(+), 34 deletions(-)
+
+c3e7cd270639a49b04ee7720ab38a90648595411
+pinwang5776
+1619609090
+add comment to timestamp convert
+ 2 files changed, 29 insertions(+), 1 deletion(-)
+
+1843386149c122d49aae42e06f8dd5c6eebfd935
+pete965
+1619597360
+models
+ 12 files changed, 90 insertions(+), 2 deletions(-)
+
+8cc250d042994d94d273dcffc12facbbe9a08133
+pete965
+1619587574
+models
+ 6 files changed, 16 insertions(+), 4 deletions(-)
+
+b22424ba3e0c3e61fb8c9becac5c7c97466f0ca4
+Jingdan Cui
+1619584612
+update get_meeting_minutes url
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+e458b3dff798750c08a9aaca652c779c0fb892b9
+Jingdan Cui
+1619584339
+move get_meeting_minutes function to confluence.py
+ 2 files changed, 31 insertions(+), 29 deletions(-)
+
+da0e3cf590a443decdef792e0b33b240fce609ea
+pinwang5776
+1619580769
+remove null=False, because it is by default.
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+25753d53e7b5931d86c79b1e64a44e089f82f94b
+pete965
+1619580329
+models
+ 2 files changed, 8 insertions(+), 6 deletions(-)
+
+8e5fa26e1b1adcedf8f59f6adc3fec544bd5f7bc
+pete965
+1619580069
+models
+ 2 files changed, 6 insertions(+), 7 deletions(-)
+
+0eb0ca256eae465a2fd4b7231d60fa08966af9aa
+pete965
+1619579979
+models
+ 4 files changed, 20 insertions(+), 7 deletions(-)
+
+094bf4ea61f766ffa965b0fbe8bc23d1391f5dfd
+pete965
+1619579216
+models
+ 6 files changed, 54 insertions(+)
+
+8295090bdc44bfc6ab40936793f4e72d1d70319f
+pinwang
+1619539107
+Update database regularly
+ 4 files changed, 61 insertions(+), 34 deletions(-)
+
+59c81912dbefdfd50a860015f99ef2ad202b1d09
+pinwang
+1619536943
+Delete print info
+ 1 file changed, 1 deletion(-)
+
+a679e16563d4caa9a6c45091b0341d52b68cdfd9
+pinwang
+1619536815
+Improve the method and logic used
+ 1 file changed, 30 insertions(+), 43 deletions(-)
+
+e4c206bf15587ee176ee15c756f44d030aca7e0c
+pinwang5776
+1619535594
+Update confluence.py
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+34c98e6a96410773ec571f0011f8ea920212d548
+pinwang
+1619533161
+Get history page counts
+ 2 files changed, 53 insertions(+)
+
+9aeb64e42a06f542aecfad9dc009814fb0797beb
+Aquila Qin
+1619529009
+Implemented contributions API + minor fixes + comments
+ 3 files changed, 82 insertions(+), 7 deletions(-)
+
+d842bd9b03c1831f3380d653d96329f7901cb873
+Jingdan Cui
+1619511821
+create get_meeting_minutes function & update_meeting_minutes function
+ 3 files changed, 94 insertions(+)
+
+ff10c7ec94c4274a6875bee0921f6f1d3740ab13
+Jingdan Cui
+1619511225
+update meeting_minutes table
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+980cb8d1bcdcc06382563fb3f454571d310b6498
+Aquila Qin
+1619495375
+Implemented timestamped ticket count
+ 3 files changed, 48 insertions(+), 16 deletions(-)
+
+0997cdea9ab9d6ed092cbee1aefc3b952f144e78
+Aquila Qin
+1619461362
+Reworked chart output, but with TLS issue
+ 3 files changed, 50 insertions(+), 3 deletions(-)
+
+ae350040281c27aa0b897884bb31ff6c018c0840
+Aquila Qin
+1619458114
+Reworked issues per sprint
+ 3 files changed, 38 insertions(+), 4 deletions(-)
+
+079a21b6d329ed257783fc200e63c395ec2b41ba
+Aquila Qin
+1619457766
+Reworked sprint dates
+ 3 files changed, 68 insertions(+), 1 deletion(-)
+
+e98c258c53713a7e66a898383e66038618460751
+Aquila Qin
+1619457157
+Reworked individual comments
+ 3 files changed, 31 insertions(+), 4 deletions(-)
+
+e53453b391f96728c65914c67a10ed1441a589e6
+Aquila Qin
+1619455884
+Removed mentions of previous api in urls_v1.py
+ 1 file changed, 10 insertions(+), 9 deletions(-)
+
+c29bdfd40a95dd66b0b4ff4808951a49522d7919
+Aquila Qin
+1619455085
+Reworked team and individual api
+ 6 files changed, 198 insertions(+), 460 deletions(-)
+
+417be48199183c236c4e81fb2434cae0a01b4a6b
+Jingdan Cui
+1619432824
+create meeting_minutes table
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+46426927a285543731f2350ae1156aa1c6bf6481
+pinwang5776
+1619422547
+update comments
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+231280ea16af6c85289b735fc616d6cde8a402f7
+pinwang5776
+1619414807
+remove redundant method
+ 1 file changed, 6 insertions(+), 43 deletions(-)
+
+2dea7f31574a6d8b387105f7270aaf0003861422
+wangpin
+1619413173
+get user list from database
+ 1 file changed, 12 insertions(+), 38 deletions(-)
+
+f17de41584dd224ee0cbc8251ab4fce399a82317
+wangpin
+1619408960
+update database password
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+26407641a24b600d67ac80f29f32208efbd5d0c2
+wangpin
+1619407950
+make migrate for confluence model
+ 1 file changed, 28 insertions(+)
+
+cf0ce463e675a81397d2baafc391e42108a23330
+wangpin
+1619407919
+update user list database every day, start this function once the server is on
+ 4 files changed, 67 insertions(+), 59 deletions(-)
+
+e83e806c70cca06665d6e824ea1d3d8b22a1df3e
+wangpin
+1619405812
+use thread to run function for the first time in start_schedule
+ 1 file changed, 9 insertions(+), 2 deletions(-)
+
+7b41c5257c3b90c34069e201129b487176629ae4
+pinwang
+1619365536
+update userlist regularly
+ 1 file changed, 58 insertions(+)
+
+765ba5d546a9e27b6a07c83e0260a9c72ef03c42
+pinwang
+1619362916
+remove date
+ 1 file changed, 2 deletions(-)
+
+81c111579c98b8a610797521a633dd3ad22360a7
+pinwang
+1619356614
+add get user list by groups that have update permmission
+ 1 file changed, 26 insertions(+), 11 deletions(-)
+
+30b6704d6d45fa8937fa364a63cc8f5c2a59e535
+pinwang
+1619355292
+create user_list table
+ 2 files changed, 18 insertions(+), 2 deletions(-)
+
+6f50cc2ee8dc95fc7f55310da0757c1c5d06e6fd
+pinwang
+1619348414
+get user list by confluence space key, without database
+ 1 file changed, 14 insertions(+), 7 deletions(-)
+
+a33195e2baae27fcd27d9f0cfcdc82d17137235f
+pinwang
+1619258410
+some functions for list users
+ 2 files changed, 31 insertions(+), 1 deletion(-)
+
+287350cf2c5bc580cecb979738547738ab8b83d8
+pinwang
+1619348414
+get user list by confluence space key, without database
+ 1 file changed, 14 insertions(+), 7 deletions(-)
+
+33c85e0ee674d645c62b777de3b6aabf207ed141
+pinwang
+1619267586
+add scheduler util function
+ 1 file changed, 6 insertions(+)
+
+ea64d8e3297d513585298e712b0424206b413caf
+pinwang
+1619258410
+some functions for list users
+ 2 files changed, 31 insertions(+), 1 deletion(-)
+
+2f349b22fee9735e125bb1562038a1ee6f66ae77
+pinwang
+1619246642
+Create a confluence model
+ 9 files changed, 21 insertions(+), 2 deletions(-)
+
+a221a8a273478bcee742d47889a1fee029b96b7c
+pinwang
+1619233062
+get space keys by keyword
+ 2 files changed, 32 insertions(+), 2 deletions(-)
+
+232e8e91a58fff02499d56dc4b141a71e215aa5c
+pinwang
+1619233062
+get space keys by keyword
+ 2 files changed, 32 insertions(+), 2 deletions(-)
+
+939b73fa09382a9445b60fc258249b6fda1f8233
+pinwang
+1618845409
+after makemigrations
+ 5 files changed, 237 insertions(+)
+
+3511613240b7cbc2ecd57ca35bb0d8c279123bd7
+pinwang
+1618845243
+test for deploy
+ 25 files changed, 10 insertions(+), 9 deletions(-)
+
+576239692e2253538faceb23ddd8233314af8ec9
+pinwang
+1618622629
+remove depoly test
+ 2 files changed, 14 deletions(-)
+
+03b5b84c8d0896e1763fb647959c7c4783ee622e
+pinwang
+1618622303
+update for migrate
+ 23 files changed, 2 insertions(+), 244 deletions(-)
+
+04de9980a874f4621f5fed66ed122c3b1d2412dc
+pete965
+1618592716
+deploy change
+ 121 files changed, 11 insertions(+), 3 deletions(-)
+
+e07582f20d43ccde31d6457efd7e54bfe3c9d785
+chengzsh3
+1618463206
+Update test_get_git_commits.py
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+1c52615720ad625e9c4cf7e68c5e244e17329b78
+pete965
+1617270046
+docs and related materials
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+f206648c3d5c2bac34b0a51909b9bfb5361f06aa
+pete965
+1617266645
+docs and related materials
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+7683870f9ccdfbb04cb3350faea23460a0bac28e
+pete965
+1617260742
+docs and related materials
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+bfb218dc760b7d674bd7c76e01f995bdbfd4220e
+pete965
+1617260691
+docs and related materials
+ 368 files changed, 45667 insertions(+), 4 deletions(-)
+
+ba29e095a328988b8eafaed4ef30c6c7c3681a39
+pinwang
+1617246754
+update structure
+ 1 file changed, 23 insertions(+), 3 deletions(-)
+
+7bbbd71a25053151a5765a49c4231bf839cc36f2
+wangpin
+1616636100
+update
+ 219 files changed, 237 insertions(+), 242 deletions(-)
+
+3684e863d84c30f9a4db8306503151645332af24
+pinwang5776
+1616597545
+Update readme.md
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+d60f8d06b19736b877f6f9f642cde96ddc19f00f
+wangpin
+1616597495
+init
+ 130 files changed, 7732 insertions(+)
+
+4e69e75b07c551a808403a99545b2074b8de236a
+pete965
+1616588999
+init
+ 1 file changed, 0 insertions(+), 0 deletions(-)
