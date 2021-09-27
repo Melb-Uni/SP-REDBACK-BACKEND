@@ -395,7 +395,9 @@ def get_contributions(request, team):
             temp = jira.jql('assignee = ' + student + ' AND project = "'
                                   + team + '" AND status CHANGED by ' + student)['issues']
             for element in temp:
-                change_log_temp.append(element['fields']['summary'])
+                issue_id = element['key']
+                change_log_temp.append({'summary': element['fields']['summary'],
+                                        'url': 'https://jira.cis.unimelb.edu.au:8444/browse/'+issue_id})
             change_log.append(change_log_temp)
         value = zip(count, change_log)
         result = dict(zip(names, value))
@@ -437,13 +439,16 @@ def update_contributions(jira_url):
         temp = jira.jql('assignee = ' + student + ' AND project = "'
                         + team + '" AND status CHANGED by ' + student)['issues']
         for element in temp:
-            change_log_temp.append(element['fields']['summary'])
+            issue_id = element['key']
+            change_log_temp.append({'summary': element['fields']['summary'],
+                                    'url': 'https://jira.cis.unimelb.edu.au:8444/browse/' + issue_id})
         change_log.append(change_log_temp)
     value = zip(count, change_log)
     result = dict(zip(names, value))
 
     data = []
-    for name, count in result.items():
+    for name, value in result.items():
+        count, change_log = value
         data.append({
             'student': name,
             'done_count': count,
@@ -488,9 +493,7 @@ def get_contributions_from_db(request, team):
 
         allExistRecord = list(IndividualContributions.objects.filter(space_key=jira_url).values('student', 'done_count',
                                                                                                 'change_log'))
-
-        resp = init_http_response(
-            RespCode.success.value.key, RespCode.success.value.msg)
+        resp = init_http_response(RespCode.success.value.key, RespCode.success.value.msg)
         resp['data'] = allExistRecord
         return HttpResponse(json.dumps(resp), content_type="application/json")
     except Exception:
@@ -726,19 +729,17 @@ def update_throughputdata(jira_url):
     team = get_url_from_db(jira_url)
     jira_analytics2(username, password, team)
 
-    data = []
     with open('TeamSPBackend/api/views/jira/throughput.csv', newline='') as csv_file:
         reader = csv.DictReader(csv_file)
         for row in reader:
-            data.append({
-                'time': round(to_unix_time(row[''])),
-                'count': int(float(row['count'])),
-            })
-            if not JiraThroughPut.objects.filter(space_key=team, time=row['']).exists():
+            if not JiraThroughPut.objects.filter(space_key=team, time=round(to_unix_time(row['']))).exists():
                 jira_obj = JiraThroughPut(space_key=team,
                                           time=round(to_unix_time(row['completed_date'])),
                                           count=int(float(row['count'])))
                 jira_obj.save()
+            else:
+                JiraThroughPut.objects.filter(space_key=team, time=round(to_unix_time(row['']))).update(
+                    count=int(float(row['count'])))
     os.remove('TeamSPBackend/api/views/jira/throughput.csv')
     os.remove('TeamSPBackend/api/views/jira/scatterplot.csv')
     os.remove('TeamSPBackend/api/views/jira/histogram.csv')
@@ -764,6 +765,8 @@ def update_histogramdata(jira_url):
                                          day=row[''],
                                          count=int(float(row['Items'])))
                 jira_obj.save()
+            else:
+                JiraHistogram.objects.filter(space_key=team, day=row['']).update(count=int(float(row['Items'])))
     os.remove('TeamSPBackend/api/views/jira/histogram.csv')
     os.remove('TeamSPBackend/api/views/jira/throughput.csv')
     os.remove('TeamSPBackend/api/views/jira/scatterplot.csv')
