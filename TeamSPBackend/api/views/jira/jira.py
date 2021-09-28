@@ -31,6 +31,7 @@ from TeamSPBackend.api.views.jira.models import IndividualContributions
 from TeamSPBackend.api.views.jira.models import JiraCycleTimeScatter
 from TeamSPBackend.api.views.jira.models import JiraThroughPut
 from TeamSPBackend.api.views.jira.models import JiraHistogram
+from TeamSPBackend.api.views.jira.models import IndividualSummaryAndUrls
 from TeamSPBackend.api.views.jira.models import Urlconfig
 from TeamSPBackend.project.models import ProjectCoordinatorRelation
 from TeamSPBackend.coordinator.models import Coordinator
@@ -388,6 +389,7 @@ def get_contributions(request, team):
         team = get_project_key(team, jira)
         count = []
         change_log = []
+        index = 0
         for student in students:
             change_log_temp = []
             count.append(jira.jql('assignee = ' + student + ' AND project = "'
@@ -396,9 +398,17 @@ def get_contributions(request, team):
                                   + team + '" AND status CHANGED by ' + student)['issues']
             for element in temp:
                 issue_id = element['key']
+                if IndividualSummaryAndUrls.objects.filter(space_key=team, student=names[index], url='https://jira.cis.unimelb.edu.au:8444/browse/'+issue_id).exists():
+                    continue
+                else:
+                    jira_issue_obj = IndividualSummaryAndUrls(space_key=team, student=names[index],
+                                                              summary=element['fields']['summary'],
+                                                              url='https://jira.cis.unimelb.edu.au:8444/browse/'+issue_id)
+                    jira_issue_obj.save()
                 change_log_temp.append({'summary': element['fields']['summary'],
                                         'url': 'https://jira.cis.unimelb.edu.au:8444/browse/'+issue_id})
             change_log.append(change_log_temp)
+            index+=1
         value = zip(count, change_log)
         result = dict(zip(names, value))
         data = []
@@ -432,6 +442,7 @@ def update_contributions(jira_url):
     students, names = get_done_contributor_names(team, jira)
     count = []
     change_log = []
+    index = 0
     for student in students:
         change_log_temp = []
         count.append(jira.jql('assignee = ' + student + ' AND project = "'
@@ -440,12 +451,19 @@ def update_contributions(jira_url):
                         + team + '" AND status CHANGED by ' + student)['issues']
         for element in temp:
             issue_id = element['key']
+            if IndividualSummaryAndUrls.objects.filter(space_key=team, student=names[index], summary=element['fields']['summary']).exists():
+                continue
+            else:
+                jira_issue_obj = IndividualSummaryAndUrls(space_key=team, student=names[index],
+                                                          summary=element['fields']['summary'],
+                                                          url='https://jira.cis.unimelb.edu.au:8444/browse/' + issue_id)
+                jira_issue_obj.save()
             change_log_temp.append({'summary': element['fields']['summary'],
                                     'url': 'https://jira.cis.unimelb.edu.au:8444/browse/' + issue_id})
         change_log.append(change_log_temp)
+        index += 1
     value = zip(count, change_log)
     result = dict(zip(names, value))
-
     data = []
     for name, value in result.items():
         count, change_log = value
@@ -500,6 +518,23 @@ def get_contributions_from_db(request, team):
         resp = {'code': -1, 'msg': 'error'}
         return HttpResponse(json.dumps(resp), content_type="application/json")
 
+@require_http_methods(['GET'])
+def get_summary_url_from_db(request, team):
+    try:
+        existRecord = list(
+            ProjectCoordinatorRelation.objects.filter(space_key=team).values(
+                'jira_project'))
+        url = key_extracter(existRecord[0])
+        jira_url = url.get('jira_project')
+
+        allExistRecord = list(IndividualSummaryAndUrls.objects.filter(space_key=jira_url).values('student', 'summary',
+                                                                                                'url'))
+        resp = init_http_response(RespCode.success.value.key, RespCode.success.value.msg)
+        resp['data'] = allExistRecord
+        return HttpResponse(json.dumps(resp), content_type="application/json")
+    except Exception:
+        resp = {'code': -1, 'msg': 'error'}
+        return HttpResponse(json.dumps(resp), content_type="application/json")
 
 @require_http_methods(['POST'])
 def setGithubJiraUrl(request):
