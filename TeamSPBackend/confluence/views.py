@@ -332,6 +332,7 @@ def get_last_updated_files(space_key):
     get the list of lastly updated files
     author:yalzhao
     """
+    import datetime
     atl_username = config.atl_username
     atl_password = config.atl_password
     conf = confluence.log_into_confluence(atl_username, atl_password)
@@ -350,9 +351,22 @@ def get_last_updated_files(space_key):
     # Loop through every page and store the pages i and upated times.
     for page in results:
         if "lastUpdated" in page["history"]:
-            contributed_files.append((page["history"]["lastUpdated"]["when"],page["title"],page['_links']["webui"]))
+            utc = page["history"]["lastUpdated"]["when"]
+            utc = utc.split('.')[0]+'+'+ utc.split('+')[1]
+            UTC_FORMAT = "%Y-%m-%dT%H:%M:%S%z"
+            utcTime = datetime.datetime.strptime(utc, UTC_FORMAT)
+            new_form =utcTime.strftime("%Y-%m-%d, %H:%M:%S, Melbourne time")
+            contributed_files.append((new_form,page["title"],page['_links']["webui"]))
+
+            #contributed_files.append((page["history"]["lastUpdated"]["when"],page["title"],page['_links']["webui"]))
         else:
-            contributed_files.append((page["history"]["createdDate"],page["title"],page['_links']["webui"]))
+            utc = page["history"]["createdDate"]
+            utc = utc.split('.')[0]+'+'+ utc.split('+')[1]
+            UTC_FORMAT = "%Y-%m-%dT%H:%M:%S%z"
+            utcTime = datetime.datetime.strptime(utc, UTC_FORMAT)
+            new_form =utcTime.strftime("%Y-%m-%d, %H:%M:%S, Melbourne time")
+            contributed_files.append((new_form,page["title"],page['_links']["webui"]))
+            #contributed_files.append((page["history"]["createdDate"],page["title"],page['_links']["webui"]))
     contributed_files.sort(reverse = True)
     ans=[]
     for (time,title,link) in contributed_files[:20]:
@@ -370,6 +384,7 @@ def get_comment(space_key):
     author: yalzhao
     """
     import re
+    import datetime
     atl_username = config.atl_username
     atl_password = config.atl_password
     conf = confluence.log_into_confluence(atl_username, atl_password)
@@ -391,7 +406,14 @@ def get_comment(space_key):
             st = new_info["body"]["view"]["value"]
             reg = re.compile('<[^>]*>')
             content = reg.sub('',st).replace('\n','')
-            comments.append((page["title"],content,new_info2["history"]["createdDate"],new_info2["history"]["createdBy"]["username"]))
+            utc = new_info2["history"]["createdDate"]
+            utc = utc.split('.')[0]+'+'+ utc.split('+')[1]
+            UTC_FORMAT = "%Y-%m-%dT%H:%M:%S%z"
+            utcTime = datetime.datetime.strptime(utc, UTC_FORMAT)
+            new_form =utcTime.strftime("%Y-%m-%d, %H:%M:%S, Melbourne time")
+            comments.append((page["title"],content,new_form,new_info2["history"]["createdBy"]["username"]))
+            
+            #comments.append((page["title"],content,new_info2["history"]["createdDate"],new_info2["history"]["createdBy"]["username"]))
             #print(conf.get_page_child_by_type(page_id = new_id[i]["id"],type="comment",start=None, limit=None)) #type="comment"
         #for child in page_info:
             #comments.append((space_key,child))
@@ -409,6 +431,7 @@ def get_comment(space_key):
             creator =creator
         ))
     return ans
+
 
 
 def insert_space_page_contribution(space_key):
