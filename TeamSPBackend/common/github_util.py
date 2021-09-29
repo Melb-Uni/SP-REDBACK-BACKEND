@@ -32,9 +32,9 @@ UND_PATH = '/Applications/Understand.app/Contents/MacOS/'
 #UND_PATH = BASE_DIR+'/Understand-6.0.1077-Linux-64bit/scitools/bin/linux64/'
 
 # set Understand License
-UND_LICENSE = 'und -setlicensecode RgNuX72O0IInmAKc6BuC'
+UND_LICENSE = UND_PATH+'und -setlicensecode bgZynGqTlJCYDj5Z'
 os.system(UND_LICENSE)
-
+print("reaeraeeeeeeeeeeeeeeeAA")
 # understand und command line for loading a git repo and generate metrics
 UND_METRICS = UND_PATH + 'und create -db {} -languages python C++ Java add {} {} analyze'
 
