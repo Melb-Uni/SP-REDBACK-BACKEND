@@ -43,11 +43,20 @@ def get_all_contributor_pages(request, space_key):
     Response: list of student name, and the pages they contributed
     """
     try:
+        di = dict()
+
         data = []
         for contribution in IndividualContributionPages.objects.filter(space_key=space_key):
+            if contribution.user_id in di:
+                di[contribution.user_id].append(contribution.page_name)
+            else:
+                di[contribution.user_id] = [contribution.page_name]
+        for student in di:
             pair = {
-                "student": contribution.user_id,
-                "page_name": contribution.page_name
+                #"student": contribution.user_id,
+                #"page_name": contribution.page_name
+                "student": student,
+                "page_name":di[student]
             }
             data.append(pair)
 
