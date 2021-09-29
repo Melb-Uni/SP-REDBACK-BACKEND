@@ -56,7 +56,7 @@ def get_all_contributor_pages(request, space_key):
                 #"student": contribution.user_id,
                 #"page_name": contribution.page_name
                 "student": student,
-                "page_name":di[student]
+                "page_name": str(di[student])
             }
             data.append(pair)
 
@@ -80,6 +80,7 @@ def get_recent_pages(request, space_key):
         data = []
         for pages in RecentPages.objects.filter(space_key=space_key):
             pair = {
+                "action":pages.action,
                 "time": pages.updated_time,
                 "page_name": pages.page_name,
                 "link":pages.link
