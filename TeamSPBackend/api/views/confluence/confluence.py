@@ -391,6 +391,7 @@ def get_page_count_by_time(request, space_key):
             }
             data.append(history)
 
+        #print(data[0])
         resp = init_http_response(
             RespCode.success.value.key, RespCode.success.value.msg)
         resp['data'] = data
@@ -399,6 +400,141 @@ def get_page_count_by_time(request, space_key):
         resp = {'code': -1, 'msg': 'error'}
         return HttpResponse(json.dumps(resp), content_type="application/json")
 
+@require_http_methods(['GET'])
+@check_login()
+def get_page_count_by_time_7(request, space_key):
+    """Get the page information for the last 7 days.
+    Method: GET
+    Request: space_key
+    author: comp90082 sm2 sp=redback yalanzhao
+    """
+    try:
+        data1 = []
+        for page_history in PageHistory.objects.filter(space_key=space_key):
+            history = {
+                "time": page_history.date,
+                "page_count": page_history.page_count
+            }
+            data1.append(history)
+        data=[]
+        #data.append(
+        temp = len(data1)-1
+        while (temp>0 and data1[temp]["page_count"]==data1[temp-1]["page_count"]):
+            temp-=1
+        l = max(temp-6,0)
+        for i in range(l,temp+1):
+            data.append(data1[i])
+        #print(data[0])
+        resp = init_http_response(
+            RespCode.success.value.key, RespCode.success.value.msg)
+        resp['data'] = data
+        return HttpResponse(json.dumps(resp), content_type="application/json")
+    except:
+        resp = {'code': -1, 'msg': 'error'}
+        return HttpResponse(json.dumps(resp), content_type="application/json")
+
+@require_http_methods(['GET'])
+@check_login()
+def get_page_count_by_time_30(request, space_key):
+    """Get the page information for the last 30 days.
+    Method: GET
+    Request: space_key
+    author: comp90082 sm2 sp=redback yalanzhao
+    """
+    try:
+        data1 = []
+        for page_history in PageHistory.objects.filter(space_key=space_key):
+            history = {
+                "time": page_history.date,
+                "page_count": page_history.page_count
+            }
+            data1.append(history)
+        data=[]
+        temp = len(data1)-1
+        while (temp>0 and data1[temp]["page_count"]==data1[temp-1]["page_count"]):
+            temp-=1
+        l = max(temp-29,0)
+        for i in range(l,temp+1):
+            data.append(data1[i])
+        #print(data[0])
+        resp = init_http_response(
+            RespCode.success.value.key, RespCode.success.value.msg)
+        resp['data'] = data
+        return HttpResponse(json.dumps(resp), content_type="application/json")
+    except:
+        resp = {'code': -1, 'msg': 'error'}
+        return HttpResponse(json.dumps(resp), content_type="application/json")
+
+@require_http_methods(['GET'])
+@check_login()
+def get_page_count_by_time_all(request, space_key):
+    """Get the page information for the last 30 days.
+    Method: GET
+    Request: space_key
+    author: comp90082 sm2 sp=redback yalanzhao
+    """
+    try:
+        data1 = []
+        for page_history in PageHistory.objects.filter(space_key=space_key):
+            history = {
+                "time": page_history.date,
+                "page_count": page_history.page_count
+            }
+            data1.append(history)
+        data=[]
+        temp = len(data1)-1
+        while (temp>0 and data1[temp]["page_count"]==data1[temp-1]["page_count"]):
+            temp-=1
+        #l = max(temp-29,0)
+        for i in range(temp+1):
+            data.append(data1[i])
+        #print(data[0])
+        resp = init_http_response(
+            RespCode.success.value.key, RespCode.success.value.msg)
+        resp['data'] = data
+        return HttpResponse(json.dumps(resp), content_type="application/json")
+    except:
+        resp = {'code': -1, 'msg': 'error'}
+        return HttpResponse(json.dumps(resp), content_type="application/json")
+
+@require_http_methods(['GET'])
+@check_login()
+def get_page_count_by_time_changes(request, space_key):
+    """Get the page information for the last 30 days.
+    Method: GET
+    Request: space_key
+    author: comp90082 sm2 sp=redback yalanzhao
+    """
+    try:
+        data1 = []
+        for page_history in PageHistory.objects.filter(space_key=space_key):
+            history = {
+                "time": page_history.date,
+                "page_count": page_history.page_count
+            }
+            data1.append(history)
+        data=[]
+        history1 = {
+                "time": data1[0]["time"]-86400,
+                "page_count": 0
+            }
+        data.append(history1)
+        data.append(data1[0])
+        for i in range(1,len(data1)):
+            if data1[i]["page_count"]!=data1[i-1]["page_count"]:
+                data.append(data1[i])
+        #while (temp>0 and data1[temp]["page_count"]==data1[temp-1]["page_count"]):
+        #    temp-=1
+        #for i in range(temp+1):
+        #    data.append(data1[i])
+        #print(data[0])
+        resp = init_http_response(
+            RespCode.success.value.key, RespCode.success.value.msg)
+        resp['data'] = data
+        return HttpResponse(json.dumps(resp), content_type="application/json")
+    except:
+        resp = {'code': -1, 'msg': 'error'}
+        return HttpResponse(json.dumps(resp), content_type="application/json")
 
 @require_http_methods(['GET'])
 @check_login()
