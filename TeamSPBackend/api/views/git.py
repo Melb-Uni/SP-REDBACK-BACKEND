@@ -218,6 +218,7 @@ def get_git_metrics(request, space_key):
         "executable_lines_count": int(metrics_data.executable_lines_count),
         "comment_lines_count": int(metrics_data.comment_lines_count),
         "comment_to_code_ratio": float(metrics_data.comment_to_code_ratio),
+        # "release"
     }
 
     data.append(tmp)

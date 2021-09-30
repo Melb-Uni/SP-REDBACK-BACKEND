@@ -13,6 +13,7 @@ logger = logging.getLogger('django')
 
 GITHUB = 'https://github.com/'
 REPO_PATH = BASE_DIR + '/resource/repo/'
+RELEASE_PATH = BASE_DIR + '/resource/release/'
 COMMIT_DIR = BASE_DIR + '/resource/commit_log'
 
 GIT_CLONE_COMMAND = 'git clone {} {}'
@@ -34,7 +35,7 @@ UND_PATH = '/Applications/Understand.app/Contents/MacOS/'
 # set Understand License
 UND_LICENSE = UND_PATH+'und -setlicensecode bgZynGqTlJCYDj5Z'
 os.system(UND_LICENSE)
-print("reaeraeeeeeeeeeeeeeeeAA")
+
 # understand und command line for loading a git repo and generate metrics
 UND_METRICS = UND_PATH + 'und create -db {} -languages python C++ Java add {} {} analyze'
 
@@ -85,6 +86,7 @@ def process_changed(changed):
     return file, insert, delete
 
 
+
 def pull_repo(repo, space_key):
     repo = construct_certification(repo, space_key)
     if repo == -1 or repo == -2:
@@ -102,6 +104,27 @@ def pull_repo(repo, space_key):
     logger.info('[GIT] Path: {} Executing: {}'.format(path, git_clone))
     os.system(git_clone)
     return 1
+
+
+def pull_release(repo, space_key):
+    repo = construct_certification(repo, space_key)
+    if repo == -1 or repo == -2:
+        return repo
+    path = REPO_PATH + convert(repo)
+
+    if check_path_exist(path):
+        git_update = GIT_UPDATE_COMMAND.format(path)
+        logger.info('[GIT] Path: {} Executing: {}'.format(path, git_update))
+
+        os.system(git_update)
+        return 1  # 1 means valid
+
+    git_clone = GIT_CLONE_COMMAND.format(repo, path)
+    logger.info('[GIT] Path: {} Executing: {}'.format(path, git_clone))
+    os.system(git_clone)
+    return 1
+
+
 
 
 def get_commits(repo, space_key, author=None, branch=None, after=None, before=None):
