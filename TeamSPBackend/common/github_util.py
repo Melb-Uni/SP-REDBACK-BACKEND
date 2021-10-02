@@ -229,7 +229,7 @@ def get_pull_request(repo, author=None, branch=None, after=None, before=None):
         commits.append(commit)
     return commits
 
-git
+
 def get_und_metrics(repo, space_key):
     state = pull_repo(repo, space_key)
     if state == -1 or state == -2:
