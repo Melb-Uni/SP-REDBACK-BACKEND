@@ -34,7 +34,7 @@ class GitMetrics(models.Model):
     executable_lines_count = models.IntegerField(null=False)
     comment_lines_count = models.IntegerField(null=False)
     comment_to_code_ratio = models.FloatField(null=False)
-    # release = models.CharField(max_length=256, null=False, default="")
+    release = models.CharField(max_length=256, null=False, default="")
 
     class Meta:
         db_table = 'git_metrics'
