@@ -5,6 +5,7 @@ from django.urls import path
 from TeamSPBackend.api.views.confluence import confluence
 from TeamSPBackend.api.views.confluence import page_contributions
 from TeamSPBackend.api.views.jira import jira
+from TeamSPBackend.coordinator import views
 from .views.invitation import invitation_router, invite_accept
 from .views.account import account_router, login, logout, update_account, delete, atl_login, supervisor_router
 from .views.subject import subject_router, update_subject, delete_subject
@@ -100,6 +101,7 @@ urlpatterns = [
     path('jira/<team>/throughput_data', jira.get_throughputdata_from_db),
     path('jira/<team>/histogram_data', jira.get_histogramdata_from_db),
     path('jira/<team>/summary_url', jira.get_summary_url_from_db),
+    path('coordinator/<team>/individual_contributions', views.get_individual_contributions_from_db),
 
 
     # legacy but not working
