@@ -46,6 +46,7 @@ class IndividualContributions(models.Model):
     id = models.AutoField(primary_key=True)
     space_key = models.CharField(max_length=256, null=False)
     student = models.CharField(max_length=256, null=False)
+    student_id = models.CharField(max_length=256, null=True)
     done_count = models.IntegerField(null=False)
     change_log = models.CharField(max_length=10000, default="")
 
@@ -53,6 +54,16 @@ class IndividualContributions(models.Model):
     class Meta:
         db_table = 'individual_contributions'
 
+
+class IndividualSummaryAndUrls(models.Model):
+    id = models.AutoField(primary_key=True)
+    space_key = models.CharField(max_length=256, null=False)
+    student = models.CharField(max_length=256, null=False)
+    summary = models.CharField(max_length=256, null=False)
+    url = models.CharField(max_length=256, null=False)
+
+    class Meta:
+        db_table = 'individual_summary_urls'
 
 class Urlconfig(models.Model):
     id = models.AutoField(primary_key=True)
