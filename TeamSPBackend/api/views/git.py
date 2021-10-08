@@ -224,7 +224,10 @@ def get_git_metrics(request, space_key):
             "executable_lines_count": int(elem.executable_lines_count),
             "comment_lines_count": int(elem.comment_lines_count),
             "comment_to_code_ratio": float(elem.comment_to_code_ratio),
-            "release": str(elem.release)
+            "release": str(elem.release),
+            "sum_cyclomatic_complexity": int(elem.sum_cyclomatic_complexity),
+            "all_methods": int(elem.all_methods)
+
         }
 
         data.append(tmp)

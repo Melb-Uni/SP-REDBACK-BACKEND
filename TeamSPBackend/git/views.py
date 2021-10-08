@@ -179,7 +179,6 @@ def get_metrics(relation):
     # extract body information and store them in GitDTO.
     body_extract(data, git_dto)
     if not git_dto.valid_url:
-        print("reach0" + git_dto.url)
         resp = init_http_response_my_enum(RespCode.no_repository)
         return make_json_response(resp=resp)
     git_dto.url = git_dto.url.lstrip('$')
@@ -200,8 +199,6 @@ def get_metrics(relation):
 
 
     for elem in metrics:
-        print("\nelemeeeeeeeeedddeee")
-        print(elem)
         if GitMetrics.objects.filter(space_key=relation.space_key).exists() and GitMetrics.objects.filter(release=elem["release"]).exists():
             GitMetrics.objects.filter(space_key=relation.space_key,release=elem["release"]).update(
                 file_count=elem['CountDeclFile'],
@@ -211,7 +208,9 @@ def get_metrics(relation):
                 declarative_lines_count=elem['CountLineCodeDecl'],
                 executable_lines_count=elem['CountLineCodeExe'],
                 comment_lines_count=elem['CountLineComment'],
-                comment_to_code_ratio=elem['RatioCommentToCode']
+                comment_to_code_ratio=elem['RatioCommentToCode'],
+                sum_cyclomatic_complexity = elem['SumCyclomatic'],
+                all_methods = elem['CountDeclMethodAll']
 
             )
         else:
@@ -225,7 +224,9 @@ def get_metrics(relation):
                 executable_lines_count=elem['CountLineCodeExe'],
                 comment_lines_count=elem['CountLineComment'],
                 comment_to_code_ratio=elem['RatioCommentToCode'],
-                release=elem["release"]
+                release=elem["release"],
+                sum_cyclomatic_complexity=elem['SumCyclomatic'],
+                all_methods=elem['CountDeclMethodAll']
             )
             metrics_dto.save()
 
