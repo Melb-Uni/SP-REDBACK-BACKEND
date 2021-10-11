@@ -191,16 +191,21 @@ def get_git_pr(request, body, *args, **kwargs):
 def get_git_metrics(request, space_key):
     # Case 1: if git_metrics table contains this space_key, get it directly from db
     if GitMetrics.objects.filter(space_key=space_key).exists():
-        metrics_data = GitMetrics.objects.filter(space_key=space_key)[0]
+
+        metrics_data = GitMetrics.objects.filter(space_key=space_key)
     # Case 2: if git_metrics table does not contain this space_key, get it using get_metrics()
     else:
+
         coordinator_id = request.session['coordinator_id']
         if ProjectCoordinatorRelation.objects.filter(space_key=space_key, coordinator_id=coordinator_id).exists():
             relation_data = ProjectCoordinatorRelation.objects.filter(space_key=space_key, coordinator_id=coordinator_id)[0]
             get_metrics(relation_data)
+
             if GitMetrics.objects.filter(space_key=space_key).exists():
-                metrics_data = GitMetrics.objects.filter(space_key=space_key)[0]
+
+                metrics_data = GitMetrics.objects.filter(space_key=space_key)
             else:
+
                 resp = init_http_response_my_enum(RespCode.invalid_parameter)
                 return make_json_response(resp=resp)
             # Case 3: if space_key is invalid, return None
@@ -209,18 +214,23 @@ def get_git_metrics(request, space_key):
             return make_json_response(resp=resp)
     data = []
 
-    tmp = {
-        "file_count": int(metrics_data.file_count),
-        "class_count": int(metrics_data.class_count),
-        "function_count": int(metrics_data.function_count),
-        "code_lines_count": int(metrics_data.code_lines_count),
-        "declarative_lines_count": int(metrics_data.declarative_lines_count),
-        "executable_lines_count": int(metrics_data.executable_lines_count),
-        "comment_lines_count": int(metrics_data.comment_lines_count),
-        "comment_to_code_ratio": float(metrics_data.comment_to_code_ratio),
-    }
+    for elem in metrics_data:
+        tmp = {
+            "file_count": int(elem.file_count),
+            "class_count": int(elem.class_count),
+            "function_count": int(elem.function_count),
+            "code_lines_count": int(elem.code_lines_count),
+            "declarative_lines_count": int(elem.declarative_lines_count),
+            "executable_lines_count": int(elem.executable_lines_count),
+            "comment_lines_count": int(elem.comment_lines_count),
+            "comment_to_code_ratio": float(elem.comment_to_code_ratio),
+            "release": str(elem.release),
+            "sum_cyclomatic_complexity": int(elem.sum_cyclomatic_complexity),
+            "all_methods": int(elem.all_methods)
 
-    data.append(tmp)
+        }
+
+        data.append(tmp)
 
     resp = init_http_response_my_enum(RespCode.success, data)
     return make_json_response(resp=resp)

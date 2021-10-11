@@ -5,7 +5,7 @@ import logging
 import re
 import sys
 import time
-
+import subprocess
 from TeamSPBackend.settings.base_setting import BASE_DIR
 from TeamSPBackend.project.models import ProjectCoordinatorRelation
 
@@ -13,6 +13,7 @@ logger = logging.getLogger('django')
 
 GITHUB = 'https://github.com/'
 REPO_PATH = BASE_DIR + '/resource/repo/'
+RELEASE_PATH = BASE_DIR + '/resource/release/'
 COMMIT_DIR = BASE_DIR + '/resource/commit_log'
 
 GIT_CLONE_COMMAND = 'git clone {} {}'
@@ -34,7 +35,7 @@ UND_PATH = '/Applications/Understand.app/Contents/MacOS/'
 # set Understand License
 UND_LICENSE = UND_PATH+'und -setlicensecode bgZynGqTlJCYDj5Z'
 os.system(UND_LICENSE)
-print("reaeraeeeeeeeeeeeeeeeAA")
+
 # understand und command line for loading a git repo and generate metrics
 UND_METRICS = UND_PATH + 'und create -db {} -languages python C++ Java add {} {} analyze'
 
@@ -85,6 +86,7 @@ def process_changed(changed):
     return file, insert, delete
 
 
+
 def pull_repo(repo, space_key):
     repo = construct_certification(repo, space_key)
     if repo == -1 or repo == -2:
@@ -102,6 +104,25 @@ def pull_repo(repo, space_key):
     logger.info('[GIT] Path: {} Executing: {}'.format(path, git_clone))
     os.system(git_clone)
     return 1
+
+
+def pull_release(repo, space_key):
+    repo = construct_certification(repo, space_key)
+    if repo == -1 or repo == -2:
+        return repo
+    repo_path = REPO_PATH + convert(repo)
+
+    git_get_tag =' git -C '+repo_path+' tag'
+    tags = subprocess.getoutput(git_get_tag).split()
+
+    for tag in tags:
+        path = RELEASE_PATH + '/'+str(tag)+'/' + convert(repo)
+        git_clone = GIT_CLONE_COMMAND.format(repo, path)+' --branch '+str(tag)
+        logger.info('[GIT]pull_release Path: {} Executing: {}'.format(path, git_clone))
+        os.system(git_clone)
+    return tags
+
+
 
 
 def get_commits(repo, space_key, author=None, branch=None, after=None, before=None):
@@ -213,29 +234,39 @@ def get_und_metrics(repo, space_key):
     state = pull_repo(repo, space_key)
     if state == -1 or state == -2:
         return state
-    und_file = convert(repo) + '.und'
-    metrics_file = convert(repo) + '.json'
-    # bug-fixed: keep the same with  pull_repo()
+    tags = pull_release(repo, space_key)
+    metrics = []
     repo = construct_certification(repo, space_key)
-    path = REPO_PATH + convert(repo)
-    st_time = time.time()
-    # Get .und , add files and analyze them
-    und_metrics = UND_METRICS.format(und_file, path, und_file)
-    logger.info('[Understand] File {} Executing: {}'.format(und_file, und_metrics))
-    os.system(und_metrics)
+    for i in range(len(tags)):
 
-    # Get metrics.json by using another .py script
-    get_metrics_by_py = GET_METRICS_PY.format(und_file, metrics_file)
-    logger.info('[Understand Python API Get Metrics] get_metrics_by_py: {} '.format(get_metrics_by_py))
-    os.system(get_metrics_by_py)
 
-    metrics_file = METRICS_FILE_PATH + metrics_file
-    with open(metrics_file, 'r') as fp:
-        tmp_dict = json.load(fp)
-    metrics = tmp_dict
-    end_time = time.time()
-    cost_time = round(end_time - st_time, 2)
-    logger.info('[Understand] File {} Get Metrics: {} , cost : {} seconds'.format(und_file, metrics, cost_time))
+        # bug-fixed: keep the same with  pull_repo()
+
+        und_file = str(tags[i]) + convert(repo) + '.und'
+        metrics_file = str(tags[i]) + convert(repo) + '.json'
+        path = RELEASE_PATH + str(tags[i]) + '/' + convert(repo)
+        st_time = time.time()
+        # Get .und , add files and analyze them
+        und_metrics = UND_METRICS.format(und_file, path, und_file)
+        logger.info('[Understand] File {} Executing: {}'.format(und_file, und_metrics))
+        os.system(und_metrics)
+
+        # Get metrics.json by using another .py script
+        get_metrics_by_py = GET_METRICS_PY.format(und_file, metrics_file)
+        logger.info('[Understand Python API Get Metrics] get_metrics_by_py: {} '.format(get_metrics_by_py))
+        os.system(get_metrics_by_py)
+
+        metrics_file = METRICS_FILE_PATH + metrics_file
+        with open(metrics_file, 'r') as fp:
+            tmp_dict = json.load(fp)
+        if tmp_dict:
+            tmp_dict["release"] = str(tags[i])
+
+            metrics.append(tmp_dict)
+        end_time = time.time()
+        cost_time = round(end_time - st_time, 2)
+        logger.info('[Understand] File {} Get Metrics: {} , cost : {} seconds'.format(und_file, metrics, cost_time))
+        logger.info('[Understand] metrics {} '.format(metrics))
     return metrics
 
 # if __name__ == '__main__':

@@ -185,39 +185,52 @@ def get_metrics(relation):
 
     metrics = get_und_metrics(git_dto.url, relation.space_key)
     if metrics is None:
+
         resp = init_http_response_my_enum(RespCode.invalid_authentication)
         return make_json_response(resp=resp)
     elif metrics == -1:
+
         resp = init_http_response_my_enum(RespCode.user_not_found)
         return make_json_response(resp=resp)
     elif metrics == -2:
+
         resp = init_http_response_my_enum(RespCode.git_config_not_found)
         return make_json_response(resp=resp)
 
-    if GitMetrics.objects.filter(space_key=relation.space_key).exists():
-        GitMetrics.objects.filter(space_key=relation.space_key).update(
-            file_count=metrics['CountDeclFile'],
-            class_count=metrics['CountDeclClass'],
-            function_count=metrics['CountDeclFunction'],
-            code_lines_count=metrics['CountLineCode'],
-            declarative_lines_count=metrics['CountLineCodeDecl'],
-            executable_lines_count=metrics['CountLineCodeExe'],
-            comment_lines_count=metrics['CountLineComment'],
-            comment_to_code_ratio=metrics['RatioCommentToCode'],
-        )
-    else:
-        metrics_dto = GitMetrics(
-            space_key=relation.space_key,
-            file_count=metrics['CountDeclFile'],
-            class_count=metrics['CountDeclClass'],
-            function_count=metrics['CountDeclFunction'],
-            code_lines_count=metrics['CountLineCode'],
-            declarative_lines_count=metrics['CountLineCodeDecl'],
-            executable_lines_count=metrics['CountLineCodeExe'],
-            comment_lines_count=metrics['CountLineComment'],
-            comment_to_code_ratio=metrics['RatioCommentToCode'],
-        )
-        metrics_dto.save()
+
+    for elem in metrics:
+        if GitMetrics.objects.filter(space_key=relation.space_key).exists() and GitMetrics.objects.filter(release=elem["release"]).exists():
+            GitMetrics.objects.filter(space_key=relation.space_key,release=elem["release"]).update(
+                file_count=elem['CountDeclFile'],
+                class_count=elem['CountDeclClass'],
+                function_count=elem['CountDeclFunction'],
+                code_lines_count=elem['CountLineCode'],
+                declarative_lines_count=elem['CountLineCodeDecl'],
+                executable_lines_count=elem['CountLineCodeExe'],
+                comment_lines_count=elem['CountLineComment'],
+                comment_to_code_ratio=elem['RatioCommentToCode'],
+                sum_cyclomatic_complexity = elem['SumCyclomatic'],
+                all_methods = elem['CountDeclMethodAll']
+
+            )
+        else:
+            metrics_dto = GitMetrics(
+                space_key=relation.space_key,
+                file_count=elem['CountDeclFile'],
+                class_count=elem['CountDeclClass'],
+                function_count=elem['CountDeclFunction'],
+                code_lines_count=elem['CountLineCode'],
+                declarative_lines_count=elem['CountLineCodeDecl'],
+                executable_lines_count=elem['CountLineCodeExe'],
+                comment_lines_count=elem['CountLineComment'],
+                comment_to_code_ratio=elem['RatioCommentToCode'],
+                release=elem["release"],
+                sum_cyclomatic_complexity=elem['SumCyclomatic'],
+                all_methods=elem['CountDeclMethodAll']
+            )
+            metrics_dto.save()
+
+
 
 
 def auto_update_metrics():
