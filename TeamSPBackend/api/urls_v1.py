@@ -61,12 +61,6 @@ urlpatterns = [
     path('confluence/spaces/<space_key>/pages', confluence.get_pages_of_space),
     path('confluence/spaces/<space_key>/pages/contributions',
          page_contributions.get_all_page_contributions),
-    path('confluence/spaces/<space_key>/pages/contributions_new',
-         page_contributions.get_all_contributor_pages),
-    path('confluence/spaces/<space_key>/pages/updated_files',
-         page_contributions.get_recent_pages),
-    path('confluence/spaces/<space_key>/pages/comments',
-         page_contributions.get_comments),
     path('confluence/spaces/<space_key>/pages/<int:page_id>',
          confluence.get_page_contributors),
     path('confluence/groups', confluence.get_all_groups),
@@ -84,6 +78,19 @@ urlpatterns = [
     path('confluence/spaces/<space_key>/page_count', confluence.get_page_count_by_time),
 
     path('sso/login', login_sso),
+    #2021 sm2
+    path('confluence/spaces/<space_key>/pages/contributions_new',
+         page_contributions.get_all_contributor_pages),
+    path('confluence/spaces/<space_key>/pages/updated_files',
+         page_contributions.get_recent_pages),
+    path('confluence/spaces/<space_key>/pages/comments',
+         page_contributions.get_comments),
+    path('confluence/spaces/<space_key>/page_count_7', confluence.get_page_count_by_time_7),
+    path('confluence/spaces/<space_key>/page_count_30', confluence.get_page_count_by_time_30),
+    path('confluence/spaces/<space_key>/page_count_all', confluence.get_page_count_by_time_all),
+    path('confluence/spaces/<space_key>/page_count_changes', confluence.get_page_count_by_time_changes),
+
+
 
     # Jira Related API
     # legacy

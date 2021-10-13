@@ -56,6 +56,7 @@ class RecentPages(models.Model):
     page_name = models.CharField(max_length=256)
     updated_time = models.CharField(max_length=256)
     link = models.CharField(max_length=2560)
+    action = models.CharField(max_length=256)
 
     class Meta:
         db_table = 'recent_pages'
