@@ -77,4 +77,24 @@ To create new models and/or APIs utilizing them, kindly follow the current direc
 
 - Create a new release, comp90082_2021_s2_sp_v1.
 
-ROTK 11
+2021.9.27
+
+- Fix bugs and add issues urls
+
+2021.9.28
+
+- Add a new table to store url and summary of Jira
+- Add a new url to get summary and urls
+
+2021.9.30
+
+- Fix bugs on obtaining the urls of summaries on Jira
+
+2021.10.03
+
+- Add a new url to get Confluence and Jira data to build a new chart
+- Add a new function to obtain Confluence and Jira data to build a new chart
+
+2021.10.10
+
+- Add encryption and decryption functions for bot and git account passwords
