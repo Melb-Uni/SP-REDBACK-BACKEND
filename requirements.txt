@@ -29,3 +29,4 @@ PyYAML~=5.3.1
 pyOpenSSL==20.0.1
 gitpython==3.1.9
 jira-agile-metrics==0.24
+pycryptodomex==3.11.0
