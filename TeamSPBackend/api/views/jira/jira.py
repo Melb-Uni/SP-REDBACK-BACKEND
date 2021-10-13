@@ -9,6 +9,7 @@ import re
 import csv
 import logging
 import ssl
+import hashlib
 
 from math import ceil
 from django.views.decorators.http import require_http_methods
@@ -539,8 +540,13 @@ def setGithubJiraUrl(request):
         jira_url = data.get("jira_url")
         logger.info(jira_url)
         git_username = data.get("git_username")
+        md = hashlib.md5()
+        md.update(git_username.encode(encoding='utf-8'))
+        git_username = md.hexdigest()
         logger.info(git_username)
         git_password = data.get("git_password")
+        md.update(git_password.encode(encoding='utf-8'))
+        git_password = md.hexdigest()
         logger.info(git_password)
 
         existURLRecord = ProjectCoordinatorRelation.objects.get(coordinator_id=coordinator_id, space_key=space_key)
