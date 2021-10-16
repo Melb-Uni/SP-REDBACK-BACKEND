@@ -434,7 +434,6 @@ def update_contributions(jira_url):
     """Immediately updates jira contribution"""
     jira = jira_login(request)
     team = get_url_from_db(jira_url)
-    print(team)
     students, names = get_done_contributor_names(team, jira)
     count = []
     index = 0
@@ -559,15 +558,10 @@ def setGithubJiraUrl(request):
         # auto_update_commits(space_key)  # after setting git config, try to update git_commit table at once
         update_ticket_count_team_timestamped(
             jira_url)  # after setting jira config, try to update jira_count_by_time table at once
-        print('sssssssssssssssssssssss1')
         update_contributions(jira_url)
-        print('sssssssssssssssssssssss2')
         update_histogramdata(jira_url)
-        print('sssssssssssssssssssssss3')
         update_scatterdata(jira_url)
-        print('sssssssssssssssssssssss4')
         update_throughputdata(jira_url)
-        print('sssssssssssssssssssssss5')
 
 
         resp = init_http_response_withoutdata(
