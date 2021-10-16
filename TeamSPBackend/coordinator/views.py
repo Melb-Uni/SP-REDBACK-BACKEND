@@ -26,12 +26,11 @@ def get_individual_contributions_from_db(request, team):
         for contribution in IndividualConfluenceContribution.objects.filter(space_key=team):
             pair = {
                 'student': contribution.user_id,
-                'page_count': contribution.page_count
+                'page_count': contribution.page_count,
+                'student_name': contribution.user_name
             }
             confluence_data.append(pair)
         for item in confluence_data:
-            print(item['student'])
-            print(jira_url)
             for record in IndividualContributions.objects.filter(space_key=jira_url, student_id=item['student']):
                 pair = {
                     'student': record.student,
@@ -40,7 +39,18 @@ def get_individual_contributions_from_db(request, team):
                 }
             data.append(pair)
         resp = init_http_response(RespCode.success.value.key, RespCode.success.value.msg)
-        resp['data'] = data
+        if not IndividualContributions.objects.filter(space_key=jira_url, student_id=confluence_data[0]['student']):
+            new_data = []
+            for item in confluence_data:
+                pair = {
+                    'student': item['student_name'],
+                    'confluence_page_count': item['page_count'],
+                    'jira_done_count': 0
+                }
+                new_data.append(pair)
+            resp['data'] = new_data
+        else:
+            resp['data'] = data
         return HttpResponse(json.dumps(resp), content_type="application/json")
     except Exception:
         resp = {'code': -1, 'msg': 'error'}

@@ -419,7 +419,7 @@ def get_contributions(request, team):
             if IndividualContributions.objects.filter(space_key=team, student=name, student_id=id).exists():
                 IndividualContributions.objects.filter(space_key=team, student=name, student_id=id).update(done_count=count)
             else:
-                jira_obj = IndividualContributions(space_key=team, student=name, student_id=id, done_count=count)
+                jira_obj = IndividualContributions(space_key=team, student=name, student_id=id, done_count=count, change='')
                 jira_obj.save()
         resp = init_http_response(
             RespCode.success.value.key, RespCode.success.value.msg)
@@ -434,7 +434,6 @@ def update_contributions(jira_url):
     """Immediately updates jira contribution"""
     jira = jira_login(request)
     team = get_url_from_db(jira_url)
-
     students, names = get_done_contributor_names(team, jira)
     count = []
     index = 0
@@ -467,7 +466,7 @@ def update_contributions(jira_url):
         if IndividualContributions.objects.filter(space_key=team, student=name, student_id=id).exists():
             IndividualContributions.objects.filter(space_key=team, student=name, student_id=id).update(done_count=count)
         else:
-            jira_obj = IndividualContributions(space_key=team, student=name, student_id=id, done_count=count)
+            jira_obj = IndividualContributions(space_key=team, student=name, student_id=id, done_count=count, change_log='')
             jira_obj.save()
 
     resp = init_http_response(
