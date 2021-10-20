@@ -46,8 +46,16 @@ To create new models and/or APIs utilizing them, kindly follow the current direc
 - For any API functions that require multiple files, put those files under a sub-folder in "TeamSPBackend/api/views/". E.g. "TeamSPBackend/api/views/newModel/"
 
 ### Some solution for the problems
-1. 
-
+1. When you first run the system or add a project, it would take a few minutes for the system to get information from API, store these API into the database and show these information on the browser. So please wait until the back-end part do not jump out new log. Then you can add new project or do other operations.
+2. Sometimes the system may do not respond for a long time, you can try some solutions in the following order:
+    - Go back to the home page and click into the project again
+    - Go back to the home page and delete the project that do not respond. Then search for the same project and add it again.
+    - Log out and try to login again.
+    - Close the back-end and front-end and try to run again from the beginning.
+    - Close the back-end and front-end, clearing the cache of the browser you use to open the system and try to run back-end and front-end again from the beginning.
+    - If all the solutions listed above could not work, please leave a comment on this git page.
+3. There are some team members from previous semester are graduated and their information is not stored in the confluence system. So you could just ignore the log information which tells you the user do not exist. 
+4. Not all the project have JIRA or confluence comment information, so some table could be blank.
 
 ## Change Log
 ### Version 1 (September 19th, 2021)
