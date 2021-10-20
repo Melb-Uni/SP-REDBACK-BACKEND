@@ -21,6 +21,7 @@ sm2_confluence is the branch of new features on Confluence part. It is updated b
 
 **require python3.7 or higher and MySQL**
 
+For the first time to run the system:
 1. Install all packages needed `pip install -r requirements.txt` (if python2 and python3 are both installed, use pip3 and python3)
 2. start MySQL server on localhost:3306, and create a database named "sp90013" `CREATE DATABASE sp90013`
 3. modify the MySQL username and password config in TeamSPBackend/Settings/dev.py and TeamSPBackend/Settings/prod.py (don't forget to modify 'DATABASES/default/TEST/PASSWORD' in prod.py)
@@ -29,6 +30,10 @@ sm2_confluence is the branch of new features on Confluence part. It is updated b
 6. api web server is now running on: http://127.0.0.1:8000/api/v1
 7. This project uses Understand for analyze Metrics.Please install Understand and change UND_PATH in github_util.py
 
+For the second time to run the system:
+1.start server `python manage.py runserver`
+2.Open the front-end
+3. Wait until a new page jump out in the browser. Please logout and login again if you found you are not at the login page.
 
 ### Structuring files
 
@@ -46,8 +51,8 @@ To create new models and/or APIs utilizing them, kindly follow the current direc
 - For any API functions that require multiple files, put those files under a sub-folder in "TeamSPBackend/api/views/". E.g. "TeamSPBackend/api/views/newModel/"
 
 ### Some solution for the problems
-1. When you first run the system or add a project, it would take a few minutes for the system to get information from API, store these API into the database and show these information on the browser. So please wait until the back-end part do not jump out new log. Then you can add new project or do other operations.
-2. Sometimes the system may do not respond for a long time, you can try some solutions in the following order:
+1. When you first run the system or add a project, it would take a few minutes for the system to get information from API, store these information into the database and show these information on the page. So please wait until the back-end part do not jump out new log. Then you can add new project or do other operations.
+2. Sometimes the system may do not respond for a long time, you can try some solutions in the following order(If one of them work, you do not need to try the later one):
     - Go back to the home page and click into the project again
     - Go back to the home page and delete the project that do not respond. Then search for the same project and add it again.
     - Log out and try to login again.
