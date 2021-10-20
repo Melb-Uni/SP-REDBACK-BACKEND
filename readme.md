@@ -15,7 +15,7 @@ sm2-jira is the branch of new features on Jira part. It is updated by Yixiao Zha
 
 sm2-git is the branch of new features on Git part. It is updated by Shisheng Liu.
 
-sm2-confluence is the branch of new features on Confluence part. It is updated by Yalan Zhao.
+sm2_confluence is the branch of new features on Confluence part. It is updated by Yalan Zhao.
 
 ## Deploy methods
 
@@ -86,9 +86,16 @@ To create new models and/or APIs utilizing them, kindly follow the current direc
 - Add a new table to store url and summary of Jira
 - Add a new url to get summary and urls
 
+2021.9.29
+
+- Change the format of time in confluence page
+- Modify the way of displaying indivadual contribution information about confluence
+- Add a column in process quality page to show the page change state
+
 2021.9.30
 
 - Fix bugs on obtaining the urls of summaries on Jira
+- Add some apis for confluence page count to show information in different time periods
 
 2021.10.03
 
