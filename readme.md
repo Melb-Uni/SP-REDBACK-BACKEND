@@ -31,8 +31,8 @@ sm2_confluence is the branch of new features on Confluence part. It is updated b
 7. This project uses Understand for analyze Metrics.Please install Understand and change UND_PATH in github_util.py
 
 **For the second time to run the system:**
-1.start server `python manage.py runserver`
-2.Open the front-end
+1. start server `python manage.py runserver`
+2. Open the front-end
 3. Wait until a new page jump out in the browser. Please logout and login again if you found you are not at the login page
 
 ### Structuring files
