@@ -27,6 +27,7 @@ sm2_confluence is the branch of new features on Confluence part. It is updated b
 4. create MySQL tables: first `python manage.py makemigrations`, then `python manage.py migrate`
 5. start server `python manage.py runserver`
 6. api web server is now running on: http://127.0.0.1:8000/api/v1
+7. This project uses Understand for analyze Metrics.Please install Understand and change UND_PATH in github_util.py
 
 
 ### Structuring files
@@ -106,6 +107,10 @@ To create new models and/or APIs utilizing them, kindly follow the current direc
 
 - Add a new url to get Confluence and Jira data to build a new chart
 - Add a new function to obtain Confluence and Jira data to build a new chart
+
+2021.10.08
+
+- Add a new function that shows the metrics of each release of the project
 
 2021.10.10
 
