@@ -44,6 +44,9 @@ To create new models and/or APIs utilizing them, kindly follow the current direc
 - API endpoints (URLs) in "TeamSPBackend/api/urls_vX.py" for version X
 - For any API functions that require multiple files, put those files under a sub-folder in "TeamSPBackend/api/views/". E.g. "TeamSPBackend/api/views/newModel/"
 
+### Some solution for the problems
+1. 
+
 
 ## Change Log
 ### Version 1 (September 19th, 2021)
@@ -76,6 +79,8 @@ To create new models and/or APIs utilizing them, kindly follow the current direc
 2021.9.19
 
 - Create a new release, comp90082_2021_s2_sp_v1.
+
+### Version 2 (October 20th, 2021)
 
 2021.9.27
 
