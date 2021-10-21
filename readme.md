@@ -27,10 +27,10 @@ sm2_confluence is the branch of new features on Confluence part. It is updated b
      1. Download Mysql from https://www.mysql.com/
      2. Install it and set up Mysql root password.
      For Ubuntu20.04:
-     4.  update the package index on your server: $ sudo apt update
-     5.  install the mysql-server package: $ sudo apt install mysql-server
-     6.  run the security script with sudo: $ sudo mysql_secure_installation
-     7.  configure your MySQL
+     1.  update the package index on your server: $ sudo apt update
+     2.  install the mysql-server package: $ sudo apt install mysql-server
+     3.  run the security script with sudo: $ sudo mysql_secure_installation
+     4.  configure your MySQL
 3. start MySQL server on localhost:3306, and create a database named "sp90013" `CREATE DATABASE sp90013`
 4. modify the MySQL username and password config in TeamSPBackend/Settings/dev.py and TeamSPBackend/Settings/prod.py (don't forget to modify 'DATABASES/default/TEST/PASSWORD' in prod.py)
 5. create MySQL tables: first `python manage.py makemigrations`, then `python manage.py migrate`
