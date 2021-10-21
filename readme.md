@@ -23,20 +23,14 @@ sm2_confluence is the branch of new features on Confluence part. It is updated b
 
 **For the first time to run the system:**
 1. Install all packages needed `pip install -r requirements.txt` (if python2 and python3 are both installed, use pip3 and python3). If you are using MacOS or linux, you can use 'sudo apt-get install libmysqlclient-dev' to install libmysqlclient-dev in order to install mysqlclient==1.4.6.
-2. Set up Mysql in your local host. For Windows:
-     1. Download Mysql from https://www.mysql.com/
-     2. Install it and set up Mysql root password.
-     For Ubuntu20.04:
-     1.  update the package index on your server: $ sudo apt update
-     2.  install the mysql-server package: $ sudo apt install mysql-server
-     3.  run the security script with sudo: $ sudo mysql_secure_installation
-     4.  configure your MySQL
-3. start MySQL server on localhost:3306, and create a database named "sp90013" `CREATE DATABASE sp90013`
-4. modify the MySQL username and password config in TeamSPBackend/Settings/dev.py and TeamSPBackend/Settings/prod.py (don't forget to modify 'DATABASES/default/TEST/PASSWORD' in prod.py)
-5. create MySQL tables: first `python manage.py makemigrations`, then `python manage.py migrate`
-6. start server `python manage.py runserver`
-7. api web server is now running on: http://127.0.0.1:8000/api/v1
-8. This project uses Understand for analyze Metrics.Please install Understand and change UND_PATH in github_util.py
+2. Set up Mysql in your local host. For Windows: 1)Download Mysql from https://www.mysql.com/; 2)Install it and set up Mysql root password. For Ubuntu20.04: 1)update the package index on your server: $ sudo apt update 2)install the mysql-server package: $ sudo apt install mysql-server 3)run the security script with sudo: $ sudo mysql_secure_installation
+4)configure your MySQL
+4. start MySQL server on localhost:3306, and create a database named "sp90013" `CREATE DATABASE sp90013`
+5. modify the MySQL username and password config in TeamSPBackend/Settings/dev.py and TeamSPBackend/Settings/prod.py (don't forget to modify 'DATABASES/default/TEST/PASSWORD' in prod.py)
+6. create MySQL tables: first `python manage.py makemigrations`, then `python manage.py migrate`
+7. start server `python manage.py runserver`
+8. api web server is now running on: http://127.0.0.1:8000/api/v1
+9. This project uses Understand for analyze Metrics.Please install Understand and change UND_PATH in github_util.py
 
 **For the second time to run the system:**
 1. start server `python manage.py runserver`
